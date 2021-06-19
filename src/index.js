@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
 import {Provider} from 'react-redux';
 import {BrowserRouter} from 'react-router-dom';
 
@@ -9,10 +8,25 @@ import * as serviceWorker from './serviceWorker';
 import reducer from './store/reducer';
 import config from './config';
 
-const store = createStore(reducer);
+import {applyMiddleware, combineReducers, createStore} from 'redux';
+import userReducer from './Reducer/user-reducer';
+import authReducer from './Reducer/auth-reducer';
+import thunkMiddleware from 'redux-thunk';
+
+const loggerMiddleware = storeAPI => next => action => {
+    console.log('dispatching', action)
+    let result = next(action)
+    console.log('next state', storeAPI.getState())
+    return result
+  }
+  
+const myEnhancer = applyMiddleware(loggerMiddleware,thunkMiddleware)
+const appStore = createStore(combineReducers({userReducer,authReducer,reducer}) , myEnhancer)
+
+window.store=appStore;
 
 const app = (
-    <Provider store={store}>
+    <Provider store={appStore}>
         <BrowserRouter basename={config.basename}>
             {/* basename="/datta-able" */}
             <App />

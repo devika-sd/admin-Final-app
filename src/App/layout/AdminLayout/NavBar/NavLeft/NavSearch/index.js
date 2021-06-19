@@ -6,21 +6,21 @@ import DEMO from "../../../../../../store/constant";
 
 class NavSearch extends Component {
     state = {
-        searchWidth: (this.props.windowWidth < 992) ? 90 : 0,
-        searchString: (this.props.windowWidth < 992) ? '90px' : '',
+        searchWidth: (this.props.windowWidth < 992) ? 200 : 0,
+        searchString: (this.props.windowWidth < 992) ? '200px' : '',
         isOpen: (this.props.windowWidth < 992)
     };
 
     searchOnHandler = () => {
         this.setState({isOpen: true});
         const searchInterval = setInterval(() => {
-            if (this.state.searchWidth >= 91) {
+            if (this.state.searchWidth >= 201) {
                 clearInterval(searchInterval);
                 return false;
             }
             this.setState(prevSate => {
                 return {
-                    searchWidth: prevSate.searchWidth + 15,
+                    searchWidth: prevSate.searchWidth + 100,
                     searchString: prevSate.searchWidth + 'px'
                 }
             });
@@ -36,7 +36,7 @@ class NavSearch extends Component {
             }
             this.setState(prevSate => {
                 return {
-                    searchWidth: prevSate.searchWidth - 15,
+                    searchWidth: prevSate.searchWidth - 100,
                     searchString: prevSate.searchWidth + 'px'
                 }
             });

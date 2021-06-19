@@ -76,27 +76,19 @@ class NavRight extends Component {
                             </Dropdown.Menu>
                         </Dropdown>
                     </li>
-                    <li className={this.props.rtlLayout ? 'm-r-15' : 'm-l-15'}>
-                        <a href={DEMO.BLANK_LINK} className="displayChatbox" onClick={() => {this.setState({listOpen: true});}}><i className="icon feather icon-mail"/></a>
-                    </li>
                     <li>
                         <Dropdown alignRight={!this.props.rtlLayout} className="drp-user">
                             <Dropdown.Toggle variant={'link'} id="dropdown-basic">
-                                <i className="icon feather icon-settings"/>
+                                <i className="icon feather icon-user"/>
                             </Dropdown.Toggle>
                             <Dropdown.Menu alignRight className="profile-notification">
                                 <div className="pro-head">
                                     <img src={Avatar1} className="img-radius" alt="User Profile"/>
                                     <span>John Doe</span>
-                                    <a href={DEMO.BLANK_LINK} className="dud-logout" title="Logout">
-                                        <i className="feather icon-log-out"/>
-                                    </a>
                                 </div>
                                 <ul className="pro-body">
-                                    <li><a href={DEMO.BLANK_LINK} className="dropdown-item"><i className="feather icon-settings"/> Settings</a></li>
                                     <li><a href={DEMO.BLANK_LINK} className="dropdown-item"><i className="feather icon-user"/> Profile</a></li>
-                                    <li><a href={DEMO.BLANK_LINK} className="dropdown-item"><i className="feather icon-mail"/> My Messages</a></li>
-                                    <li><a href={DEMO.BLANK_LINK} className="dropdown-item"><i className="feather icon-lock"/> Lock Screen</a></li>
+                                    <li><a href={DEMO.BLANK_LINK} className="dropdown-item"><i className="feather icon-log-out"/> Logout</a></li>
                                 </ul>
                             </Dropdown.Menu>
                         </Dropdown>

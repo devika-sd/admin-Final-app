@@ -28,7 +28,7 @@ class NavBar extends Component {
                             <div className="b-bg">
                                 <i className="feather icon-trending-up"/>
                             </div>
-                            <span className="b-title">Datta Able</span>
+                            <span className="b-title">Book Store</span>
                         </a>
                     </div>
                     <a className="mobile-menu" id="mobile-header" href={DEMO.BLANK_LINK}><i className="feather icon-more-horizontal"/></a>
@@ -44,10 +44,10 @@ class NavBar extends Component {
 
 const mapStateToProps = state => {
     return {
-        rtlLayout: state.rtlLayout,
-        headerBackColor: state.headerBackColor,
-        headerFixedLayout: state.headerFixedLayout,
-        collapseMenu: state.collapseMenu
+        rtlLayout: state.reducer.rtlLayout,
+        headerBackColor: state.reducer.headerBackColor,
+        headerFixedLayout: state.reducer.headerFixedLayout,
+        collapseMenu: state.reducer.collapseMenu
     }
 };
 
