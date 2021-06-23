@@ -9,14 +9,14 @@ export const fetchusers = (filter) => {
     //add your code
     console.log("***************"+filter);
     return dispatch => {
-        fetch('http://localhost:8080/api/v1/users' + filter , {
+        fetch('http://localhost:8080/api/v1/users?sort=name&' + filter , {
             headers: authHeader()
         })
             .then(res => res.json())
             .then(data => {
                 //this.setState({ users: data.data })
-                console.log(data)
-                dispatch({ type: FETCH_USERS, payload: data.data });
+                console.log(data.total)
+                dispatch({ type: FETCH_USERS, payload: data });
             })
     }
 }
@@ -95,20 +95,16 @@ export const loginusers = (user) => {
             })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
                 if (data.status) {
                     // localStorage.setItem('token', data.token);
                     dispatch({
                         type: LOGIN_USER,
-                        payload: {data:data.userid}
+                        payload: data.userid
                     });
                     // show an alert message or transition into dashboard component
                 }
                 else {
-                    dispatch({
-                        type: LOGIN_USER,
-                        payload: {message:data.message}
-                    });
+                    throw new Error(data.message);
                 }
             })
         }

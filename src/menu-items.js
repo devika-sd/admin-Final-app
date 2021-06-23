@@ -10,14 +10,14 @@ export default {
                     id: 'dashboard',
                     title: 'Dashboard',
                     type: 'item',
-                    url: '/dashboard/default',
+                    url: '/dashboard',
                     icon: 'feather icon-home',
                 },
                 {
                     id: 'profile',
                     title: 'Profile',
                     type: 'item',
-                    url: '/sample-page',
+                    url: '/profile',
                     classes: 'nav-item',
                     icon: 'feather icon-user'
                 },
@@ -31,13 +31,13 @@ export default {
                             id: 'userlist',
                             title: 'User List',
                             type: 'item',
-                            url: '/basic/tabs-pills'
+                            url: '/userlist'
                         },
                         {
                             id: 'adduser',
                             title: 'Add User',
                             type: 'item',
-                            url: '/basic/typography'
+                            url: '/adduser'
                         }
                     ]
                 },
@@ -45,17 +45,9 @@ export default {
                     id: 'orders',
                     title: 'Orders',
                     type: 'item',
-                    url: '/sample-page',
+                    url: '/orderlist',
                     classes: 'nav-item',
                     icon: 'feather icon-shopping-cart'
-                },
-                {
-                    id: 'disabled-menu',
-                    title: 'Close Menu',
-                    type: 'item',
-                    url: '#',
-                    classes: 'nav-item disabled',
-                    icon: 'feather icon-power'
                 }
             ]
         }

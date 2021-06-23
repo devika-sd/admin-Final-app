@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Dropdown} from 'react-bootstrap';
+import {Link} from 'react-router-dom';
 
 import ChatList from './ChatList';
 import Aux from "../../../../../hoc/_Aux";
@@ -87,7 +88,7 @@ class NavRight extends Component {
                                     <span>John Doe</span>
                                 </div>
                                 <ul className="pro-body">
-                                    <li><a href={DEMO.BLANK_LINK} className="dropdown-item"><i className="feather icon-user"/> Profile</a></li>
+                                    <Link to='/profile'><li><a href={DEMO.BLANK_LINK} className="dropdown-item"><i className="feather icon-user"/> Profile</a></li></Link>
                                     <li><a href={DEMO.BLANK_LINK} className="dropdown-item"><i className="feather icon-log-out"/> Logout</a></li>
                                 </ul>
                             </Dropdown.Menu>
