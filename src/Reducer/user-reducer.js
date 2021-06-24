@@ -3,7 +3,7 @@ let initialState = {
     users: [
     ],
     currentUser:"",
-    totaluser:0
+    totaluser:""
 }
 
 // Reducers in store to modify state -- don't directly manipulate state
@@ -12,32 +12,41 @@ const reducer = (state = initialState, action) =>{
     switch(action.type){
         case actions.FETCH_USERS:
             return {
+                ...state,
+                message:"",
                 users: action.payload.data,
-                currentUser:state.currentUser,
-                totaluser:action.payload.total
+                totaluser:action.payload.total,
             }
         case actions.UPDATE_USER:
             return {
+                ...state,
                  users: action.payload,
-                 currentUser:state.currentUser
+                 message: action.payload.message
             }
         case actions.LOGIN_USER:
             return {
                 // users: action.payload
-                currentUser:action.payload,
-                users:state.users
+                ...state,
+                currentUser:action.payload.userid,
+                message: action.payload.message
+            }
+        case actions.ERROR_USER:
+            return {
+                // users: action.payload 
+                ...state,
+                message: action.payload.message
             }
         case actions.ADD_USER:
-            if(action.payload.success){
                 return {
-                    message: 'User successfully added!'
+                    ...state,
+                    message: action.payload.message
                 }
-            }
-            else{
+        case actions.FILTER_USER:
                 return {
-                    message: 'User failed to added!'
+                    ...state,
+                    users: action.payload.data,
+                    totaluser:action.payload.total
                 }
-            } 
         default : return state
     }
  

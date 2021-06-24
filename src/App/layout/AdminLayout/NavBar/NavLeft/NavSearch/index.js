@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
 import windowSize from 'react-window-size';
+import {connect} from 'react-redux';
+import * as actionTypes from "../../../../../../store/actions";
+import * as useractions from '../../../../../../Actions/user-action';
 
 import Aux from "../../../../../../hoc/_Aux";
 import DEMO from "../../../../../../store/constant";
@@ -43,6 +46,24 @@ class NavSearch extends Component {
         }, 35);
     };
 
+    changehandler(event)
+    {
+        this.props.onSearch(event.target.value)
+    }
+
+    async filterdata(e)
+    {
+        if(e.target.value.length>=3)
+        {
+            this.props.onfilterUsers(e.target.value,1,5);
+            this.props.onSearch(e.target.value);
+        }
+        else
+        {
+            await this.props.onGetUsers("page=" + 1 + "&limit=" + 5)
+        }
+    }
+
     render() {
         let searchClass = ['main-search'];
         if (this.state.isOpen) {
@@ -53,7 +74,7 @@ class NavSearch extends Component {
             <Aux>
                 <div id="main-search" className={searchClass.join(' ')}>
                     <div className="input-group">
-                        <input type="text" id="m-search" className="form-control" placeholder="Search . . ." style={{width: this.state.searchString}}/>
+                        <input type="text" id="m-search" onChange={this.filterdata.bind(this)} className="form-control" placeholder="Search . . ." style={{width: this.state.searchString}}/>
                         <a href={DEMO.BLANK_LINK} className="input-group-append search-close" onClick={this.searchOffHandler}>
                             <i className="feather icon-x input-group-text"/>
                         </a>
@@ -67,4 +88,12 @@ class NavSearch extends Component {
     }
 }
 
-export default windowSize(NavSearch);
+const mapDispatchToProps = dispatch => {
+    return {
+        onSearch: (word) => dispatch({type: actionTypes.SEARCH,payload:word}),
+        onGetUsers: (filter) => dispatch(useractions.fetchusers(filter)),
+        onfilterUsers: (word,page,limit) => dispatch(useractions.filteruserbyname(word,page,limit))
+    }
+};
+
+export default connect(null, mapDispatchToProps) (windowSize(NavSearch));
