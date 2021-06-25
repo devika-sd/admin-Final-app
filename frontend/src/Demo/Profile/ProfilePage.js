@@ -1,215 +1,405 @@
-import React, { Component } from 'react';
 import { Row, Col, Card, Form, Button, Table } from 'react-bootstrap';
 
 import Aux from "../../hoc/_Aux";
-import DEMO from "../../store/constant";
-import avatar1 from '../../assets/images/user/avatar-1.jpg';
 import avatar2 from '../../assets/images/user/avatar-2.jpg';
-import avatar3 from '../../assets/images/user/avatar-3.jpg';
 
-class ProfilePage extends Component {
-    render() {
-        return (
-            <Aux>
-                <Row>
-                    <Col md={4} xl={4}>
-                        <Card className='card-event'>
-                            <Card.Body>
-                                <Form.Group as={Row} className="mb-3" style={{ width: '100%' }} >
+import React, { useEffect, useState } from 'react'
+import { useParams } from "react-router-dom"
+import { connect } from 'react-redux';
+import * as useractions from '../../Actions/user-action';
 
-                                    <div style={{ margin: 'auto' }} className="media friendlist-box align-items-center justify-content-center m-b-20">
-                                        <div className="m-r-10 photo-table">
-                                            <img className="rounded-circle" style={{ width: '220px', height: "220px", margin: 'auto' }} src={avatar2} alt="activity-user" />
-                                        </div>
-                                    </div>
+function ProfilePage(props) {
+    let { id } = useParams();
+    const [address, setAddress] = useState([]);
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [cpassword, setCPassword] = useState('');
+    const [oldPassword, setOldPassword] = useState('');
+    const [phone, setContact] = useState('');
 
-                                </Form.Group>
-                                {/* <div style={{ width: "60%",marginTop:'50px',margin:'auto',height:"50px" }}>
-                                    
-                                    <div className="col-auto" style={{ margin: '5px auto',width:"20px",height:'20px', display: 'inline-block' }}>
-                                        <h6><i class="fa fa-facebook f-30" aria-hidden="true"></i>hello</h6>
-                                    </div>
-                                    <div className="col-auto"  style={{margin: '5px auto', display: 'inline-block' }}>
-                                        <i class="fa fa-youtube f-30" aria-hidden="true"></i>
-                                    </div>
-                                    <div className="col-auto"  style={{margin: '5px auto', display: 'inline-block' }}>
-                                        <i class="fa fa-github f-30" aria-hidden="true"></i>
-                                    </div>
-                                    <div className="col-auto"  style={{margin: '5px auto', display: 'inline-block' }}>
-                                        <i class="fa fa-instagram f-30" aria-hidden="true"></i>
-                                    </div>
-                                    <div className="col-auto" style={{ margin: '5px auto', display: 'inline-block' }}>
-                                        <i  class="fa fa-twitter f-30" aria-hidden="true"></i>
-                                    </div>
-                                    <div className="col-auto"  style={{margin: '5px auto', display: 'inline-block' }}>
-                                        <i class="fa fa-linkedin-in f-30" aria-hidden="true"></i>
-                                    </div>
-                                </div> */}
-                                
-                            </Card.Body>
-                            {/* <Row sm={12} xl={12} md={12}  style={{marginTop:"20px"}}>
-                                    <Col sm={2} xl={2} md={2}></Col>
-                                    <Col sm={2} xl={2} md={2}><i class="fa fa-facebook f-30" aria-hidden="true"></i></Col>
-                                    <Col sm={2} xl={2} md={2}><i class="fa fa-twitter f-30" aria-hidden="true"></i></Col>
-                                    <Col sm={2} xl={2} md={2}><i class="fa fa-github f-30" aria-hidden="true"></i></Col>
-                                    <Col sm={2} xl={2} md={2}><i class="fa fa-instagram f-30" aria-hidden="true"></i></Col>
-                                    <Col sm={2} xl={2} md={2}></Col>
-                                </Row> */}
-                        </Card>
+    const [enable, setEnable] = useState(true)
+    const [passwordEnable, setPasswordEnable] = useState(false)
 
-                    </Col>
-                    <Col md={8} xl={8}>
-                        <Card>
-                            <Card.Header>
-                                <Card.Title as="h5">User Details
-                                </Card.Title>
-                            </Card.Header>
-                            <Card.Body>
-                                <Card.Text>
+    // const [addressError, setAddressError] = useState(true)
+    const [nameError, setNameError] = useState(true)
+    const [emailError, setEmailError] = useState(true)
+    const [passwordError, setPasswordError] = useState(true)
+    const [cpasswordError, setCPasswordError] = useState(true)
+    const [contactError, setContactError] = useState(true)
+    console.log(id)
+    useEffect(() => {
+        (async () => {
+            await props.onGetUsers("_id=" + id);
+            console.log(props.users[0].name)
+            setName(props.users[0].name)
+            setEmail(props.users[0].email)
+            setOldPassword(props.users[0].password)
+            setContact(props.users[0].phone)
+            var addresses = props.users[0].city + "," + props.users[0].pinCode;
+            setAddress(addresses)
+            // setRole(data.data[0].role)
+            if (props.users[0].isAdmin) setPasswordEnable(true)
+            else setPasswordEnable(false)
+        })();
+
+
+
+        console.log(passwordEnable);
+    }, [props.users[0].email,id])
+    const onNameChange = (event) => {
+        var nameValue = (event.target.value)
+        const expression = new RegExp('^[a-zA-Z]{1}[a-zA-Z0-9\\s]{3,30}$');
+        // console.log(nameValue);
+        if (!(expression.test(nameValue))) {
+            setName(nameValue)
+            setNameError(false)
+        }
+        else {
+            setName(nameValue)
+            setNameError(true)
+        }
+    }
+    const onEmailChange = (event) => {
+        var emailValue = (event.target.value);
+        const expression = new RegExp('^\\w+([\\.-]?\\w+)@\\w+([\\.-]?\\w+)(\\.\\w{2,3})+$');
+        // console.log(nameValue);
+        if (!(expression.test(emailValue))) {
+            setEmail(emailValue)
+            setEmailError(false)
+        }
+        else {
+            setEmail(emailValue)
+            setEmailError(true)
+        }
+    }
+    const onPasswordChange = (event) => {
+        var contactValue = (event.target.value);
+        const expression = new RegExp('^(?=.[0-9])(?=.[!@#$%^&])[a-zA-Z0-9!@#$%^&]{6,16}$');
+        // console.log(nameValue);
+        if (!(expression.test(contactValue))) {
+            setPassword(contactValue)
+            setPasswordError(false)
+        }
+        else {
+            setPassword(contactValue)
+            setPasswordError(true)
+        }
+    }
+
+    const onCPasswordChange = (event) => {
+        var contactValue = (event.target.value);
+        const expression = new RegExp('^(?=.[0-9])(?=.[!@#$%^&])[a-zA-Z0-9!@#$%^&]{6,16}$');
+        // console.log(nameValue);
+        if (!(expression.test(contactValue))) {
+            setCPassword(contactValue)
+            setCPasswordError(false)
+        }
+        else {
+            setCPassword(contactValue)
+            setCPasswordError(true)
+        }
+    }
+
+    const onContactChange = (event) => {
+        var contactValue = (event.target.value);
+        const expression = new RegExp('^[0-9]{10}$');
+        // console.log(nameValue);
+        if (!(expression.test(contactValue))) {
+            setContact(contactValue)
+            setContactError(false)
+        }
+        else {
+            setContact(contactValue)
+            setContactError(true)
+        }
+    }
+
+    const Update = async (event) => {
+        if (password.localeCompare(cpassword) === 0) {
+
+            let roleData = { name, email, password, address, phone }
+            console.log(roleData);
+            props.onUpdate(id, roleData)
+            setEnable(true)
+
+        }
+        else {
+            setCPasswordError(false)
+        }
+        // FetchCalls.registerUser(roleData)
+        // event.preventDefault()
+    }
+
+    const Edit = (event) => {
+        console.log('Edit')
+        setEnable(false)
+        // FetchCalls.registerUser(roleData)
+        // event.preventDefault()
+    }
+    if (props.users.length !== 0) {
+        var addresslist = props.users[0].addresses.map((address, i) => {
+            var newAdd = address.houseNumber + " ," + address.locality + " ," + address.city + " ," + address.state + " ," + address.country + " ," + address.pinCode;
+            return <Form.Group as={Row} className="mb-3" >
+                <Form.Label style={{
+                    // border: '1px solid lightgrey',
+                    padding: '10px 15px',
+                    textTransform: 'capitalize',
+                    fontSize: '18px'
+                    // borderRadius: '5px',
+                    // outline: 'none'
+
+                }} column sm={3}>Address {props.users[0].addresses.length>1 ? i+1 : null}</Form.Label>
+                
+                <Col sm={9}>
+                    <Form.Control readOnly plaintext style={{
+                        border: '1px solid lightgrey',
+                        padding: '10px 15px',
+                        textTransform: 'capitalize',
+                        borderRadius: '5px',
+                        outline: 'none'
+                    }} type="text" value={newAdd} placeholder="Enter Name" />
+                </Col>
+            </Form.Group>
+        })
+    }
+    return (
+        <Aux>
+            <Row>
+                <Col md={4} xl={4}>
+                    <Card className='card-event'>
+                        <Card.Body>
+                            <Form.Group as={Row} className="mb-3" style={{ width: '100%' }} >
+
+                                <div style={{ margin: 'auto' }} className="media friendlist-box align-items-center justify-content-center m-b-20">
+                                    <div className="m-r-10 photo-table" style={{ width: "100%" }}>
+                                        <img className="rounded-circle" style={{ width: '200px', height: "220px", margin: 'auto' }} src={avatar2} alt="activity-user" />
+                                    </div>
+                                </div>
+
+                            </Form.Group>
+
+                        </Card.Body>
+                    </Card>
+
+                </Col>
+                <Col md={8} xl={8}>
+                    <Card>
+                        <Card.Header>
+                            <Card.Title as="h5">User Details
+                            </Card.Title>
+                        </Card.Header>
+                        <Card.Body>
+                            <Card.Text>
+                                {enable &&
                                     <Form>
                                         <Form.Group as={Row} className="mb-3" >
                                             <Form.Label style={{
                                                 // border: '1px solid lightgrey',
                                                 padding: '10px 15px',
                                                 textTransform: 'capitalize',
-                                                fontSize: '14px'
+                                                fontSize: '18px'
                                                 // borderRadius: '5px',
                                                 // outline: 'none'
 
-                                            }} column sm={4}><b>Name</b></Form.Label>
-                                            <Col sm={8}>
-                                                <Form.Control readOnly plaintext style={{
-                                                    border: '1px solid lightgrey',
-                                                    padding: '10px 15px',
-                                                    textTransform: 'capitalize',
-                                                    borderRadius: '5px',
-                                                    outline: 'none',
-                                                }} type="text" placeholder="Enter Name" />
-                                            </Col>
-                                        </Form.Group>
-
-                                        <Form.Group as={Row} className="mb-3" >
-                                            <Form.Label style={{
-                                                // border: '1px solid lightgrey',
-                                                padding: '10px 15px',
-                                                textTransform: 'capitalize',
-                                                fontSize: '14px'
-                                                // borderRadius: '5px',
-                                                // outline: 'none'
-
-                                            }} column sm={4} ><b>Email</b></Form.Label>
-                                            <Col sm={8}>
-
-                                                <Form.Control readOnly plaintext style={{
-                                                    border: '1px solid lightgrey',
-                                                    padding: '10px 15px',
-                                                    borderRadius: '5px',
-                                                    outline: 'none'
-                                                }} type="email" placeholder="Enter Email" />
-                                            </Col>
-                                        </Form.Group>
-
-                                        <Form.Group as={Row} className="mb-3" >
-                                            <Form.Label style={{
-                                                // border: '1px solid lightgrey',
-                                                padding: '10px 15px',
-                                                textTransform: 'capitalize',
-                                                fontSize: '14px'
-                                                // borderRadius: '5px',
-                                                // outline: 'none'
-
-                                            }} column sm={4} ><b>Password</b></Form.Label>
-                                            <Col sm={8}>
-
-                                                <Form.Control readOnly plaintext style={{
-                                                    border: '1px solid lightgrey',
-                                                    padding: '10px 15px',
-                                                    borderRadius: '5px',
-                                                    outline: 'none'
-                                                }} type="password" placeholder="Password" />
-                                            </Col>
-                                        </Form.Group>
-
-                                        <Form.Group as={Row} className="mb-3" >
-                                            <Form.Label style={{
-                                                // border: '1px solid lightgrey',
-                                                padding: '10px 15px',
-                                                textTransform: 'capitalize',
-                                                fontSize: '14px'
-                                                // borderRadius: '5px',
-                                                // outline: 'none'
-
-                                            }} column sm={4} ><b>Confirm Password</b></Form.Label>
-                                            <Col sm={8}>
-
-                                                <Form.Control readOnly plaintext style={{
-                                                    border: '1px solid lightgrey',
-                                                    padding: '10px 15px',
-                                                    borderRadius: '5px',
-                                                    outline: 'none'
-                                                }} type="password" placeholder="Confirm Password" />
-                                            </Col>
-                                        </Form.Group>
-
-                                        <Form.Group as={Row} className="mb-3" >
-                                            <Form.Label style={{
-                                                // border: '1px solid lightgrey',
-                                                padding: '10px 15px',
-                                                textTransform: 'capitalize',
-                                                fontSize: '14px'
-                                                // borderRadius: '5px',
-                                                // outline: 'none'
-
-                                            }} column sm={4} ><b>Contact</b></Form.Label>
-                                            <Col sm={8}>
-                                                <Form.Control readOnly plaintext style={{
-                                                    border: '1px solid lightgrey',
-                                                    padding: '10px 15px',
-                                                    borderRadius: '5px',
-                                                    outline: 'none'
-                                                }} type="text" placeholder="Enter Contact Number" />
-                                            </Col>
-                                        </Form.Group>
-
-                                        <Form.Group as={Row} className="mb-3" >
-                                            <Form.Label style={{
-                                                // border: '1px solid lightgrey',
-                                                padding: '10px 15px',
-                                                textTransform: 'capitalize',
-                                                fontSize: '14px'
-                                                // borderRadius: '5px',
-                                                // outline: 'none'
-
-                                            }} column sm={4} ><b>Address</b></Form.Label>
-                                            <Col sm={8}>
+                                            }} column sm={3}>Name</Form.Label>
+                                            <Col sm={9}>
                                                 <Form.Control readOnly plaintext style={{
                                                     border: '1px solid lightgrey',
                                                     padding: '10px 15px',
                                                     textTransform: 'capitalize',
                                                     borderRadius: '5px',
                                                     outline: 'none'
-                                                }} type="textarea" placeholder="Address" />
+                                                }} type="text" value={name} onChange={onNameChange} placeholder="Enter Name" />
                                             </Col>
 
                                         </Form.Group>
 
-                                        <Form.Group as={Row} sm={12} style={{ width: "100%", textAlign: 'center' }}>
-                                            <div style={{ width: "100%", marginTop: '20px' }}>
-                                                <Button style={{ width: '100px', height: "40px", textAlign: 'center' }} variant="primary" >EDIT</Button>
-                                                <Button style={{ width: '100px', height: "40px", textAlign: 'center' }} variant="success">UPDATE</Button>
+                                        <Form.Group as={Row} className="mb-3" >
+                                            <Form.Label style={{
+                                                // border: '1px solid lightgrey',
+                                                padding: '10px 15px',
+                                                textTransform: 'capitalize',
+                                                fontSize: '18px'
+                                                // borderRadius: '5px',
+                                                // outline: 'none'
+
+                                            }} column sm={3}>Email</Form.Label>
+                                            <Col sm={9}>
+
+                                                <Form.Control readOnly plaintext style={{
+                                                    border: '1px solid lightgrey',
+                                                    padding: '10px 15px',
+                                                    borderRadius: '5px',
+                                                    outline: 'none'
+                                                }} type="email" value={email} onChange={onEmailChange} placeholder="Enter Email" />
+                                            </Col>
+
+                                        </Form.Group>
+
+                                        <Form.Group as={Row} className="mb-3" >
+                                            <Form.Label style={{
+                                                // border: '1px solid lightgrey',
+                                                padding: '10px 15px',
+                                                textTransform: 'capitalize',
+                                                fontSize: '18px'
+                                                // borderRadius: '5px',
+                                                // outline: 'none'
+
+                                            }} column sm={3}>Contact No.</Form.Label>
+                                            <Col sm={9}>
+                                                <Form.Control readOnly plaintext style={{
+                                                    border: '1px solid lightgrey',
+                                                    padding: '10px 15px',
+                                                    borderRadius: '5px',
+                                                    outline: 'none'
+                                                }} type="text" value={phone} onChange={onContactChange} placeholder="Enter Contact Number" />
+                                            </Col>
+
+                                        </Form.Group>
+                                        {addresslist}
+
+                                        <Form.Group as={Row} sm={12} style={{ marginTop: '50px', width: "100%", textAlign: 'center' }}>
+                                            <div style={{ width: "100%" }}>
+                                                <Button style={{ margin: '3px', width: '100px', display: 'inline-block', height: "40px", textAlign: 'center' }} variant="primary" block onClick={Edit} variant="primary" >EDIT</Button>
+                                                <Button style={{ margin: '3px', width: '100px', display: 'inline-block', height: "40px", textAlign: 'center' }} variant="primary" disabled block onClick={Update} variant="success">UPDATE</Button>
                                             </div>
                                         </Form.Group>
                                     </Form>
-                                </Card.Text>
+                                }
 
-                            </Card.Body>
-                        </Card>
+                                {/* Enabled */}
+                                {!enable && <Form>
+                                    <Form.Group as={Row} className="mb-3" >
+                                        <Form.Label style={{
+                                            // border: '1px solid lightgrey',
+                                            padding: '10px 15px',
+                                            textTransform: 'capitalize',
+                                            fontSize: '18px'
+                                            // borderRadius: '5px',
+                                            // outline: 'none'
 
-                    </Col>
-                </Row>
-            </Aux>
-        );
+                                        }} column sm={3}>Name</Form.Label>
+                                        <Col sm={9}>
+                                            <Form.Control type="text" value={name} onChange={onNameChange} placeholder="Enter Name" />
+                                        </Col>
+                                        {!nameError && <Form.Text className="text-danger">
+                                            Please Enter Valid Name (paddu)
+                                        </Form.Text>}
+                                    </Form.Group>
+
+                                    <Form.Group as={Row} className="mb-3" >
+                                        <Form.Label style={{
+                                            // border: '1px solid lightgrey',
+                                            padding: '10px 15px',
+                                            textTransform: 'capitalize',
+                                            fontSize: '18px'
+                                            // borderRadius: '5px',
+                                            // outline: 'none'
+
+                                        }} column sm={3}>Email</Form.Label>
+                                        <Col sm={9}>
+
+                                            <Form.Control type="email" value={email} onChange={onEmailChange} placeholder="Enter Email" />
+                                        </Col>
+                                        {!emailError && <Form.Text className="text-danger">
+                                            Please Enter Valid Email (paddu@gmail.com)
+                                        </Form.Text>}
+                                    </Form.Group>
+                                    {passwordEnable &&
+                                        <Form.Group as={Row} className="mb-3" >
+                                            <Form.Label style={{
+                                                // border: '1px solid lightgrey',
+                                                padding: '10px 15px',
+                                                textTransform: 'capitalize',
+                                                fontSize: '18px'
+                                                // borderRadius: '5px',
+                                                // outline: 'none'
+
+                                            }} column sm={3}>Password</Form.Label>
+                                            <Col sm={9}>
+                                                <Form.Control type="text" value={password} onChange={onPasswordChange} placeholder="New Password" />
+                                            </Col>
+                                            {!passwordError && <Form.Text className="text-danger">
+                                                Please Enter Valid Password (paddu@0y)
+                                            </Form.Text>}
+                                        </Form.Group>
+
+                                    }
+                                    {passwordEnable &&
+                                        <Form.Group as={Row} className="mb-3" >
+                                            <Form.Label style={{
+                                                // border: '1px solid lightgrey',
+                                                padding: '10px 15px',
+                                                textTransform: 'capitalize',
+                                                fontSize: '18px'
+                                                // borderRadius: '5px',
+                                                // outline: 'none'
+
+                                            }} column sm={3}>Confirm Password</Form.Label>
+                                            <Col sm={9}>
+                                                <Form.Control type="text" value={cpassword} onChange={onCPasswordChange} placeholder="Confirm Password" />
+                                            </Col>
+                                            {!cpasswordError && <Form.Text className="text-danger">
+                                                Please Enter Valid Password (paddu@0y)
+                                            </Form.Text>}
+                                        </Form.Group>
+
+                                    }
+
+                                    <Form.Group as={Row} className="mb-3" >
+                                        <Form.Label style={{
+                                            // border: '1px solid lightgrey',
+                                            padding: '10px 15px',
+                                            textTransform: 'capitalize',
+                                            fontSize: '18px'
+                                            // borderRadius: '5px',
+                                            // outline: 'none'
+
+                                        }} column sm={3}>Contact No.</Form.Label>
+                                        <Col sm={9}>
+                                            <Form.Control type="text" value={phone} onChange={onContactChange} placeholder="Enter Contact Number" />
+                                        </Col>
+                                        <Form.Text sm={3}></Form.Text>
+                                        {!contactError && <Form.Text className="text-danger" sm={9}>
+                                            Please Enter Valid Contact number (9284556633)
+                                        </Form.Text>}
+                                    </Form.Group>
+
+                                    <Form.Group as={Row} sm={12} style={{ marginTop: '50px', width: "100%", textAlign: 'center' }}>
+                                        <div style={{ width: "100%" }}>
+                                            <Button style={{ margin: '3px', width: '100px', display: 'inline-block', style: 'inline-block', height: "40px", textAlign: 'center' }} disabled variant="primary" block onClick={Edit} variant="primary" >EDIT</Button>
+                                            <Button style={{ margin: '3px', width: '100px', display: 'inline-block', style: 'inline-block', height: "40px", textAlign: 'center' }} variant="primary" block onClick={Update} variant="success">UPDATE</Button>
+                                        </div>
+                                    </Form.Group>
+
+                                </Form>
+                                }
+                            </Card.Text>
+
+                        </Card.Body>
+                    </Card>
+
+                </Col>
+            </Row>
+        </Aux>
+    );
+}
+
+const mapStateToProps = (state) => {
+    return {
+        users: state.userReducer.users,
+        authenticated: state.authReducer.authenticated,
+        currentuser:state.userReducer.currentUser
     }
 }
 
-export default ProfilePage;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onUpdate: (id, roledata) => dispatch(useractions.updateusers(id, roledata)),
+        onGetUsers: (id) => dispatch(useractions.fetchusers(id))
+
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProfilePage);

@@ -1,33 +1,41 @@
 import * as actions from '../Actions/user-action';
 let initialState = {
     users: [
+        {
+            email:'',
+            password:'',
+            name:'',
+            photo:'',
+            phone:'',
+            addresses:[]
+        }
     ],
-    currentUser:"",
-    totaluser:""
+    currentUser: "",
+    totaluser: ""
 }
 
 // Reducers in store to modify state -- don't directly manipulate state
-const reducer = (state = initialState, action) =>{
+const reducer = (state = initialState, action) => {
     console.log('Action recieved at reducer***  ', action);
-    switch(action.type){
+    switch (action.type) {
         case actions.FETCH_USERS:
             return {
                 ...state,
-                message:"",
+                message: "",
                 users: action.payload.data,
-                totaluser:action.payload.total,
+                totaluser: action.payload.total,
             }
         case actions.UPDATE_USER:
             return {
                 ...state,
-                 users: action.payload,
-                 message: action.payload.message
+                users: action.payload,
+                message: action.payload.message
             }
         case actions.LOGIN_USER:
             return {
                 // users: action.payload
                 ...state,
-                currentUser:action.payload.userid,
+                currentUser: action.payload.userid,
                 message: action.payload.message
             }
         case actions.ERROR_USER:
@@ -37,19 +45,19 @@ const reducer = (state = initialState, action) =>{
                 message: action.payload.message
             }
         case actions.ADD_USER:
-                return {
-                    ...state,
-                    message: action.payload.message
-                }
+            return {
+                ...state,
+                message: action.payload.message
+            }
         case actions.FILTER_USER:
-                return {
-                    ...state,
-                    users: action.payload.data,
-                    totaluser:action.payload.total
-                }
-        default : return state
+            return {
+                ...state,
+                users: action.payload.data,
+                totaluser: action.payload.total
+            }
+        default: return state
     }
- 
+
 }
 
 export default reducer;

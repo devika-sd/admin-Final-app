@@ -1,3 +1,4 @@
+import currentUser from './services/tokendecoder';
 export default {
     items: [
         {
@@ -17,7 +18,7 @@ export default {
                     id: 'profile',
                     title: 'Profile',
                     type: 'item',
-                    url: '/profile',
+                    url: '/profile/'+currentUser.currentUser(),
                     classes: 'nav-item',
                     icon: 'feather icon-user'
                 },

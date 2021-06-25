@@ -30,7 +30,7 @@ class UserList extends React.Component {
         this.props.word === '' ? await this.getUsers() : await this.props.onfilterUsers(this.props.word, this.state.active, this.state.limit);
     }
     async getUsers() {
-        await this.props.onGetUsers("page=" + this.state.active + "&limit=" + this.state.limit+"&isAdmin=false");
+        await this.props.onGetUsers("page=" + this.state.active + "&limit=" + this.state.limit);
     }
     async updatepagination(current) {
         var max = 1;
@@ -175,7 +175,8 @@ const mapDispatchToProps = (dispatch) => {
         onBlock: (email, status, filter) => dispatch(useractions.blockusers(email, status, filter)),
         onDelete: (email, filter) => dispatch(useractions.deleteusers(email, filter)),
         onGetUsers: (filter) => dispatch(useractions.fetchusers(filter)),
-        onfilterUsers: (word, page, limit) => dispatch(useractions.filteruserbyname(word, page, limit))
+        onfilterUsers: (word,page,limit) => dispatch(useractions.filteruserbyname(word,page,limit))
+
     }
 }
 

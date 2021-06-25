@@ -16,7 +16,7 @@ const routes = [
     { path: '/orderlist', exact: true, name: 'Basic Badges', component: Orders },
     { path: '/userlist', exact: true, name: 'Basic Tabs & Pills', component: UserList },
     { path: '/adduser', exact: true, name: 'Basic Typography', component: AddUser },
-    { path: '/profile', exact: true, name: 'Sample Page', component: ProfilePage }
+    { path: '/profile/:id', exact: true, name: 'Sample Page', component: ProfilePage }
 ];
 
 export default routes;
