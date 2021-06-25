@@ -13,16 +13,15 @@ function Orders() {
 
     const tabContent = (
         <Aux>
-            <Row className="unread mt-2">
+            <Row className="unread mt-2 mb-4">
                 <Col>
                     <h6>00001</h6>
                 </Col>
-                <Col xs={4}>
+                <Col xs={3}>
                     <h6 className="mb-1">Isabella Christensen</h6>
-                    <p className="text-muted mb-3">Lorem Ipsum is simply dummy text of…</p>
                 </Col>
                 <Col>
-                    <h6 style={{ marginLeft: '20px' }}>Ordered</h6>
+                    <h6>Ordered</h6>
                 </Col>
                 <Col>
                     <h6 className="text-muted"><i className="fa fa-circle text-c-green f-10 m-r-15" />11 MAY 12:56</h6>
@@ -31,16 +30,15 @@ function Orders() {
                     <a style={{ width: '70px', display: 'inline-block', textAlign: 'center' }} className="label theme-bg2 text-white f-12">COD</a>
                 </Col>
             </Row>
-            <Row className="unread mt-2">
+            <Row className="unread mt-2 mb-4">
                 <Col>
                     <h6>00002</h6>
                 </Col>
-                <Col xs={4}>
+                <Col xs={3}>
                     <h6 className="mb-1">Mathilde Andersen</h6>
-                    <p className="text-muted mb-3">Lorem Ipsum is simply dummy text of…</p>
                 </Col>
                 <Col>
-                    <h6 style={{ marginLeft: '20px' }}>Completed</h6>
+                    <h6>Completed</h6>
                 </Col>
                 <Col>
                     <h6 className="text-muted"><i className="fa fa-circle text-c-red f-10 m-r-15" />11 MAY 10:35</h6>
@@ -49,16 +47,15 @@ function Orders() {
                     <a style={{ width: '70px', display: 'inline-block', textAlign: 'center' }} className="label theme-bg text-white f-12">Online</a>
                 </Col>
             </Row>
-            <Row className="unread mt-2">
+            <Row className="unread mt-2 mb-4">
                 <Col>
                     <h6>00001</h6>
                 </Col>
-                <Col xs={4}>
+                <Col xs={3}>
                     <h6 className="mb-1">Isabella Christensen</h6>
-                    <p className="text-muted mb-3">Lorem Ipsum is simply dummy text of…</p>
                 </Col>
                 <Col>
-                    <h6 style={{ marginLeft: '20px' }}>Delayed</h6>
+                    <h6>Delayed</h6>
                 </Col>
                 <Col>
                     <h6 className="text-muted"><i className="fa fa-circle text-c-green f-10 m-r-15" />11 MAY 12:56</h6>
@@ -67,16 +64,15 @@ function Orders() {
                     <a style={{ width: '70px', display: 'inline-block', textAlign: 'center' }} className="label theme-bg2 text-white f-12">COD</a>
                 </Col>
             </Row>
-            <Row className="unread mt-2">
+            <Row className="unread mt-2 mb-4">
                 <Col>
                     <h6>00001</h6>
                 </Col>
-                <Col xs={4}>
+                <Col xs={3}>
                     <h6 className="mb-1">Isabella Christensen</h6>
-                    <p className="text-muted mb-3">Lorem Ipsum is simply dummy text of…</p>
                 </Col>
                 <Col>
-                    <h6 style={{ marginLeft: '20px' }}>Delayed</h6>
+                    <h6>Delayed</h6>
                 </Col>
                 <Col>
                     <h6 className="text-muted"><i className="fa fa-circle text-c-green f-10 m-r-15" />11 MAY 12:56</h6>
@@ -85,16 +81,15 @@ function Orders() {
                     <a style={{ width: '70px', display: 'inline-block', textAlign: 'center' }} className="label theme-bg2 text-white f-12">COD</a>
                 </Col>
             </Row>
-            <Row className="unread mt-2">
+            <Row className="unread mt-2 mb-4">
                 <Col>
                     <h6>00001</h6>
                 </Col>
-                <Col xs={4}>
+                <Col xs={3}>
                     <h6 className="mb-1">Isabella Christensen</h6>
-                    <p className="text-muted mb-3">Lorem Ipsum is simply dummy text of…</p>
                 </Col>
                 <Col>
-                    <h6 style={{ marginLeft: '20px' }}>Shipped</h6>
+                    <h6>Shipped</h6>
                 </Col>
                 <Col>
                     <h6 className="text-muted"><i className="fa fa-circle text-c-green f-10 m-r-15" />11 MAY 12:56</h6>
@@ -121,13 +116,13 @@ function Orders() {
                                     <h6 className="m-0 d-inline text-c-purple">&nbsp;<b>OrderID</b></h6>
 
                                 </Col>
-                                <Col xs={4}>
+                                <Col xs={3}>
                                     <i className="icon feather icon-mail  text-c-purple" />
                                     <h6 className="m-0 d-inline text-c-purple">&nbsp;<b>Email</b></h6>
 
                                 </Col>
 
-                                <Col style={{ marginLeft: '20px' }} className="media-body">
+                                <Col className="media-body">
                                     <i className="icon feather icon-pie-chart text-c-purple" />
                                     <h6 className="m-0 d-inline text-c-purple">&nbsp;<b>Status</b></h6>
                                 </Col>
@@ -156,13 +151,13 @@ function Orders() {
                                     <h6 className="m-0 d-inline text-c-purple">&nbsp;<b>OrderID</b></h6>
 
                                 </Col>
-                                <Col xs={4}>
+                                <Col xs={3}>
                                     <i className="icon feather icon-mail  text-c-purple" />
                                     <h6 className="m-0 d-inline text-c-purple">&nbsp;<b>Email</b></h6>
 
                                 </Col>
 
-                                <Col style={{ marginLeft: '20px' }} className="media-body">
+                                <Col className="media-body">
                                     <i className="icon feather icon-pie-chart text-c-purple" />
                                     <h6 className="m-0 d-inline text-c-purple">&nbsp;<b>Status</b></h6>
                                 </Col>
@@ -191,13 +186,13 @@ function Orders() {
                                     <h6 className="m-0 d-inline text-c-purple">&nbsp;<b>OrderID</b></h6>
 
                                 </Col>
-                                <Col xs={4}>
+                                <Col xs={3}>
                                     <i className="icon feather icon-mail  text-c-purple" />
                                     <h6 className="m-0 d-inline text-c-purple">&nbsp;<b>Email</b></h6>
 
                                 </Col>
 
-                                <Col style={{ marginLeft: '20px' }} className="media-body">
+                                <Col className="media-body">
                                     <i className="icon feather icon-pie-chart text-c-purple" />
                                     <h6 className="m-0 d-inline text-c-purple">&nbsp;<b>Status</b></h6>
                                 </Col>
@@ -226,13 +221,13 @@ function Orders() {
                                     <h6 className="m-0 d-inline text-c-purple">&nbsp;<b>OrderID</b></h6>
 
                                 </Col>
-                                <Col xs={4}>
+                                <Col xs={3}>
                                     <i className="icon feather icon-mail  text-c-purple" />
                                     <h6 className="m-0 d-inline text-c-purple">&nbsp;<b>Email</b></h6>
 
                                 </Col>
 
-                                <Col style={{ marginLeft: '20px' }} className="media-body">
+                                <Col className="media-body">
                                     <i className="icon feather icon-pie-chart text-c-purple" />
                                     <h6 className="m-0 d-inline text-c-purple">&nbsp;<b>Status</b></h6>
                                 </Col>
@@ -261,13 +256,13 @@ function Orders() {
                                     <h6 className="m-0 d-inline text-c-purple">&nbsp;<b>OrderID</b></h6>
 
                                 </Col>
-                                <Col xs={4}>
+                                <Col xs={3}>
                                     <i className="icon feather icon-mail  text-c-purple" />
                                     <h6 className="m-0 d-inline text-c-purple">&nbsp;<b>Email</b></h6>
 
                                 </Col>
 
-                                <Col style={{ marginLeft: '20px' }} className="media-body">
+                                <Col className="media-body">
                                     <i className="icon feather icon-pie-chart text-c-purple" />
                                     <h6 className="m-0 d-inline text-c-purple">&nbsp;<b>Status</b></h6>
                                 </Col>
@@ -296,13 +291,13 @@ function Orders() {
                                     <h6 className="m-0 d-inline text-c-purple">&nbsp;<b>OrderID</b></h6>
 
                                 </Col>
-                                <Col xs={4}>
+                                <Col xs={3}>
                                     <i className="icon feather icon-mail  text-c-purple" />
                                     <h6 className="m-0 d-inline text-c-purple">&nbsp;<b>Email</b></h6>
 
                                 </Col>
 
-                                <Col style={{ marginLeft: '20px' }} className="media-body">
+                                <Col className="media-body">
                                     <i className="icon feather icon-pie-chart text-c-purple" />
                                     <h6 className="m-0 d-inline text-c-purple">&nbsp;<b>Status</b></h6>
                                 </Col>
@@ -331,13 +326,13 @@ function Orders() {
                                     <h6 className="m-0 d-inline text-c-purple">&nbsp;<b>OrderID</b></h6>
 
                                 </Col>
-                                <Col xs={4}>
+                                <Col xs={3}>
                                     <i className="icon feather icon-mail  text-c-purple" />
                                     <h6 className="m-0 d-inline text-c-purple">&nbsp;<b>Email</b></h6>
 
                                 </Col>
 
-                                <Col style={{ marginLeft: '20px' }} className="media-body">
+                                <Col className="media-body">
                                     <i className="icon feather icon-pie-chart text-c-purple" />
                                     <h6 className="m-0 d-inline text-c-purple">&nbsp;<b>Status</b></h6>
                                 </Col>
