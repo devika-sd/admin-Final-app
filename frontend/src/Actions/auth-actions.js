@@ -1,5 +1,5 @@
 export const USER_LOGIN = "USER_LOGIN"
-
+export const RESET_AUTH="RESET_AUTH"
 
 
 export const login = (success) => {

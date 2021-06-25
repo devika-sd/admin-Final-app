@@ -3,6 +3,8 @@ import authHeader from '../services/auth-header'
 export const FETCH_ORDERS = "FETCH_ORDERS"
 export const UPDATE_ORDERS = "UPDATE_ORDERS"
 export const ERROR_ORDERS = "ERROR_ORDERS"
+export const RESET_ORDERS = "RESET_ORDERS"
+
 const URL ="http://localhost:8080/api/v1/orders/";
 
 export const fetchorders = (filter) => {

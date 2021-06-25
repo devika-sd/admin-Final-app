@@ -96,15 +96,18 @@ class AddUser extends Component {
 
 
     roleCheck(event) {
-        let value = event.target.value
-        if (value === 0) {
+        let value = event.target.value;
+        if (value ==="") {
+            console.log("*",value);
             this.setState({ roleError: ' Please Select Role', rolevalid: 0 })
         }
-
         else {
-            this.setState({ role: value, rolevalid: 1 })
+            this.setState({ roleError:'', rolevalid: 1 })
+            console.log(".........",value);
         }
+        this.setState({ role: value })
     }
+    
 
     housenumberCheck(event){
         let value = event.target.value
@@ -113,7 +116,7 @@ class AddUser extends Component {
             this.setState({ housenumber: value, housenumbervalid: 1,housenoError:"" })
         }
         else {
-            this.setState({ housenoError: 'enter valid number', housenumbervalid: 0 })
+            this.setState({ housenoError: 'Please provide valid number', housenumbervalid: 0 })
         }
     }
 
@@ -124,7 +127,7 @@ class AddUser extends Component {
             this.setState({ locality: value, localityvalid: 1,localityError:'' })
         }
         else {
-            this.setState({ localityError: 'enter valid locality', localityvalid: 0 })
+            this.setState({ localityError: 'please provide valid locality', localityvalid: 0 })
         }
     }
     
@@ -135,14 +138,14 @@ class AddUser extends Component {
             this.setState({ city: value, cityvalid: 1,cityError:'' })
         }
         else {
-            this.setState({ cityError: 'enter valid city', cityvalid: 0 })
+            this.setState({ cityError: 'please provide valid city', cityvalid: 0 })
         }
     }
 
     countryCheck(event) {
         let value = event.target.value
-        if (value === 0) {
-            this.setState({ country: value,countryError: 'enter valid country', countryvalid: 0 })
+        if (value ==="") {
+            this.setState({ country: value,countryError: 'Please provide valid country', countryvalid: 0 })
         }
 
         else {
@@ -152,13 +155,14 @@ class AddUser extends Component {
     
     stateCheck(event){
         let value = event.target.value
-        if (value === 0) {
-            this.setState({ select: value,stateError: 'enter valid state', selectvalid :1 });
+        if (value ==="") {
+            this.setState({stateError: 'Please provide valid state', selectvalid :0 });
         }
 
         else {
-            this.setState({ select: value, statevalid: 1,stateError:'' })
+            this.setState({selectvalid: 1,stateError:'' })
         }
+        this.setState({select:value})
     }
 
     pincodeCheck(event){
@@ -168,7 +172,7 @@ class AddUser extends Component {
             this.setState({ pincode: value, pincodevalid :1,pincodeError:'' })
         }
         else {
-            this.setState({ pincodeError: 'enter valid pincode',pincode: value, pincodevalid: 1 })
+            this.setState({ pincodeError: 'Please provide valid pincode',pincode: value, pincodevalid: 1 })
         }
     }
 
@@ -234,14 +238,14 @@ class AddUser extends Component {
                                             <Form.Group controlId="exampleForm.ControlSelect1">
                                                 <Form.Label>Role</Form.Label>
                                                 <Form.Control onChange={this.roleCheck.bind(this)} as="select">
-                                                    <option value="0">Select Role</option>
-                                                    <option value={true} >Admin</option>
-                                                    <option value={false}>User</option>
+                                                                                                           
+                                                        <option value="">Select Role</option>
+                                                        <option value={true}>Admin</option>
+                                                        <option value={false}>User</option>                                                     
                                                 </Form.Control>
-                                                <p className="help-block text-danger">{this.state.roleError}</p>
-                                            </Form.Group>
+                                                <p className="help-block text-danger">{this.state.roleError}</p>                                       </Form.Group>
 
-                                            
+
                                         </Form>
                                     </Col>
                                     <Col md={6}>
@@ -269,32 +273,32 @@ class AddUser extends Component {
 
                                         </Form.Row>
 
-                                        {(this.state.housenoError ==='' || this.state.localityError === '') ? <Form.Label style={{marginTop:"15px"}} ></Form.Label> : null}
+                                        {(this.state.housenoError ==='' && this.state.localityError === '') ? <Form.Label style={{marginTop:"15px"}} ></Form.Label> : null}
 
                                         <Form.Row>
 
                                             <Form.Group as={Col} controlId="formGridCity">
                                                 <Form.Control type="text" onChange={this.citycheck.bind(this)} className="form-control" id="exampleInputUsername1" placeholder="City" />
-                                                {this.state.countryError ? <p className="help-block text-danger">{this.state.cityError}</p> : null } 
+                                                {this.state.cityError ? <p className="help-block text-danger">{this.state.cityError}</p> : null } 
                                             </Form.Group>
 
                                             <Form.Group as={Col} controlId="exampleForm.ControlSelect1">
                                                 <Form.Control onChange={this.stateCheck.bind(this)} as="select">
-                                                    <option value="0">Select State</option>
+                                                    <option value="">Select State</option>
                                                     {this.state.state1.map(data =>(
                                                         <option title={data}>{data}</option>
                                                     ))}
                                                 </Form.Control>
-                                                {this.state.stateError ? <p className="help-block text-danger"></p> : null }
+                                                {this.state.stateError ? <p className="help-block text-danger">{this.state.stateError}</p> : null }
 
                                             </Form.Group>
 
                                         </Form.Row>
-                                        {(this.state.cityError ==='' || this.state.stateError === '') ? <Form.Label style={{marginTop:"15px"}} ></Form.Label> : null }
+                                        {(this.state.cityError ==='' && this.state.stateError === '') ? <Form.Label style={{marginTop:"15px"}} ></Form.Label> : null }
                                         <Form.Row>
                                             <Form.Group as={Col} onChange={this.countryCheck.bind(this)} controlId="exampleForm.ControlSelect1">
                                                 <Form.Control as="select">
-                                                    <option value="0">Select Country</option>
+                                                    <option value="">Select Country</option>
                                                     <option value="India">India</option>
                                                 </Form.Control>
                                                 <p className="help-block text-danger">{this.state.countryError}</p>

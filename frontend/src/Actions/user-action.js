@@ -6,6 +6,7 @@ export const LOGIN_USER = "LOGIN_USER"
 export const ADD_USER = "ADD_USER"
 export const ERROR_USER = "ERROR_USER"
 export const FILTER_USER = "FILTER_USER"
+export const RESET_USER = "RESET_USER"
 
 export const filteruserbyname = (name,page,limit) => {
     //add your code

@@ -1,16 +1,35 @@
 import React from 'react';
 import {Row, Col, Card, Table, Tabs, Tab} from 'react-bootstrap';
-//import PieBasicChar from "../Charts/Nvd3Chart/PieBasicChart";
-//import PieDonutChart from "../Charts/Nvd3Chart/PieDonutChart";
 import Aux from "../../hoc/_Aux";
-//import DEMO from "../../store/constant";
 import Index from "../Charts/Nvd3Chart/index";
-// import avatar1 from '../../assets/images/user/avatar-1.jpg';
-// import avatar2 from '../../assets/images/user/avatar-2.jpg';
-// import avatar3 from '../../assets/images/user/avatar-3.jpg';
 import Admintable from './Admintable';
 
+// import * as actionTypes from "../../store/actions";
+// import * as orderactions from '../../Actions/order-action';
+// import { connect } from 'react-redux';
+import authHeader from '../../services/auth-header';
+
 class Dashboard extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {totalCount:0,todaysOrder:0,cancelledOreder:0};
+    }
+
+    componentDidMount() {
+        fetch('http://localhost:8080/api/v1/orders/count', {
+            headers: authHeader()
+        })
+            .then(res => res.json())
+            .then(data => {
+                // console.log("count data",data)
+                this.setState({totalCount:data.totalorder});
+                console.log(this.state.totalCount);
+                this.setState({todaysOrder:data.todaysorder});
+                this.setState({cancelledOreder:data.cancelledcount});
+                // dispatch({ type: COUNT_ORDER, payload: data });
+            })
+    }
     render() {
        const tabContent = (
             <Aux>
@@ -46,11 +65,7 @@ class Dashboard extends React.Component {
                                 <h6 className='mb-4'>Total Booking</h6>
                                 <div className="row d-flex align-items-center">
                                     <div className="col-9">
-                                        <h3 className="f-w-300 d-flex align-items-center m-b-0"><i className="feather icon-arrow-up text-c-green f-30 m-r-5"/> $249.95</h3>
-                                    </div>
-
-                                    <div className="col-3 text-right">
-                                        <p className="m-b-0">50%</p>
+                                        <h3 className="f-w-300 d-flex align-items-center m-b-0"><i className="feather icon-arrow-up text-c-green f-30 m-r-5"/>{this.state.totalCount}</h3>
                                     </div>
                                 </div>
                                 <div className="progress m-t-30" style={{height: '7px'}}>
@@ -62,14 +77,10 @@ class Dashboard extends React.Component {
                     <Col md={6} xl={3}>
                         <Card>
                             <Card.Body>
-                                <h6 className='mb-4'>Todays bootking</h6>
+                                <h6 className='mb-4'>Todays booking</h6>
                                 <div className="row d-flex align-items-center">
                                     <div className="col-9">
-                                        <h3 className="f-w-300 d-flex align-items-center m-b-0"><i className="feather icon-arrow-down text-c-red f-30 m-r-5"/> $2.942.32</h3>
-                                    </div>
-
-                                    <div className="col-3 text-right">
-                                        <p className="m-b-0">36%</p>
+                                        <h3 className="f-w-300 d-flex align-items-center m-b-0"><i className="feather icon-arrow-up text-c-green f-30 m-r-5"/>{this.state.todaysOrder}</h3>
                                     </div>
                                 </div>
                                 <div className="progress m-t-30" style={{height: '7px'}}>
@@ -84,11 +95,7 @@ class Dashboard extends React.Component {
                                 <h6 className='mb-4'>Cancelled Order</h6>
                                 <div className="row d-flex align-items-center">
                                     <div className="col-9">
-                                        <h3 className="f-w-300 d-flex align-items-center m-b-0"><i className="feather icon-arrow-up text-c-green f-30 m-r-5"/> $8.638.32</h3>
-                                    </div>
-
-                                    <div className="col-3 text-right">
-                                        <p className="m-b-0">70%</p>
+                                        <h3 className="f-w-300 d-flex align-items-center m-b-0"><i className="feather icon-arrow-down text-c-red f-30 m-r-5"/>{this.state.cancelledOreder}</h3>
                                     </div>
                                 </div>
                                 <div className="progress m-t-30" style={{height: '7px'}}>
@@ -139,4 +146,11 @@ class Dashboard extends React.Component {
     }
 }
 
+// const mapDispatchToProps = (dispatch) => {
+//     return {
+//         onGetCount: () => dispatch(orderactions.getorders())
+//     }
+// }
+
+// export default connect(null,mapDispatchToProps)(Dashboard);
 export default Dashboard;

@@ -145,7 +145,7 @@ function ProfilePage(props) {
                     // border: '1px solid lightgrey',
                     padding: '10px 15px',
                     textTransform: 'capitalize',
-                    fontSize: '18px'
+                    fontSize: '15px'
                     // borderRadius: '5px',
                     // outline: 'none'
 
@@ -198,7 +198,7 @@ function ProfilePage(props) {
                                                 // border: '1px solid lightgrey',
                                                 padding: '10px 15px',
                                                 textTransform: 'capitalize',
-                                                fontSize: '18px'
+                                                fontSize: '15px'
                                                 // borderRadius: '5px',
                                                 // outline: 'none'
 
@@ -220,7 +220,7 @@ function ProfilePage(props) {
                                                 // border: '1px solid lightgrey',
                                                 padding: '10px 15px',
                                                 textTransform: 'capitalize',
-                                                fontSize: '18px'
+                                                fontSize: '15px'
                                                 // borderRadius: '5px',
                                                 // outline: 'none'
 
@@ -242,7 +242,7 @@ function ProfilePage(props) {
                                                 // border: '1px solid lightgrey',
                                                 padding: '10px 15px',
                                                 textTransform: 'capitalize',
-                                                fontSize: '18px'
+                                                fontSize: '15px'
                                                 // borderRadius: '5px',
                                                 // outline: 'none'
 
@@ -275,7 +275,7 @@ function ProfilePage(props) {
                                             // border: '1px solid lightgrey',
                                             padding: '10px 15px',
                                             textTransform: 'capitalize',
-                                            fontSize: '18px'
+                                            fontSize: '15px'
                                             // borderRadius: '5px',
                                             // outline: 'none'
 
@@ -293,7 +293,7 @@ function ProfilePage(props) {
                                             // border: '1px solid lightgrey',
                                             padding: '10px 15px',
                                             textTransform: 'capitalize',
-                                            fontSize: '18px'
+                                            fontSize: '15px'
                                             // borderRadius: '5px',
                                             // outline: 'none'
 
@@ -312,7 +312,7 @@ function ProfilePage(props) {
                                                 // border: '1px solid lightgrey',
                                                 padding: '10px 15px',
                                                 textTransform: 'capitalize',
-                                                fontSize: '18px'
+                                                fontSize: '15px'
                                                 // borderRadius: '5px',
                                                 // outline: 'none'
 
@@ -332,7 +332,7 @@ function ProfilePage(props) {
                                                 // border: '1px solid lightgrey',
                                                 padding: '10px 15px',
                                                 textTransform: 'capitalize',
-                                                fontSize: '18px'
+                                                fontSize: '15px'
                                                 // borderRadius: '5px',
                                                 // outline: 'none'
 
@@ -352,7 +352,7 @@ function ProfilePage(props) {
                                             // border: '1px solid lightgrey',
                                             padding: '10px 15px',
                                             textTransform: 'capitalize',
-                                            fontSize: '18px'
+                                            fontSize: '15px'
                                             // borderRadius: '5px',
                                             // outline: 'none'
 

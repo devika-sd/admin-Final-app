@@ -9,15 +9,15 @@ import DEMO from "../../../../../../store/constant";
 
 class NavSearch extends Component {
     state = {
-        searchWidth: (this.props.windowWidth < 992) ? 200 : 0,
-        searchString: (this.props.windowWidth < 992) ? '200px' : '',
+        searchWidth: (this.props.windowWidth < 992) ? 100 : 0,
+        searchString: (this.props.windowWidth < 992) ? '100px' : '',
         isOpen: (this.props.windowWidth < 992)
     };
 
     searchOnHandler = () => {
         this.setState({isOpen: true});
         const searchInterval = setInterval(() => {
-            if (this.state.searchWidth >= 201) {
+            if (this.state.searchWidth >= 101) {
                 clearInterval(searchInterval);
                 return false;
             }
