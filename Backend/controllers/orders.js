@@ -5,6 +5,14 @@ const bcrypt = require('bcrypt');
 // 4.Connection to db
 console.log('attempting to connect')
 
+const getOrderCount = asyncHandler(async(req,res)=>{
+    let totalorder=await Orders.countDocuments();
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    let todaysorder=await Orders.countDocuments({orderDate: {$gte: today}});
+    let cancelledcount=await Orders.countDocuments({status:'cancelled'});
+    res.json({totalorder,todaysorder,cancelledcount});
+})
 
 const fetchAllOrders = asyncHandler(async (req, res) => {
     res.status(200).json(res.advancedResults)
@@ -31,4 +39,4 @@ const addOrder = asyncHandler(async (req, res, next) => {
 })
 
 
-module.exports = { updateOrderById, fetchAllOrders, addOrder };
+module.exports = { updateOrderById, fetchAllOrders, addOrder,getOrderCount };
