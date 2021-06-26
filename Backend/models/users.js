@@ -50,7 +50,7 @@ const UsersSchema = new schema({
 });
 UsersSchema.index({name: 'text', email: 'text'});
 UsersSchema.methods.generateToken = async function () {
-    let token = await jwt.sign({ _id: this._id, isAdmin: this.isAdmin, isBlocked: this.isBlocked }, process.env.JWT_SECRET_KEY, { expiresIn: '1h' });
+    let token = await jwt.sign({ _id: this._id, isAdmin: this.isAdmin, isBlocked: this.isBlocked }, process.env.JWT_SECRET_KEY/*, { expiresIn: '1h' }*/);
     return token;
 }
 

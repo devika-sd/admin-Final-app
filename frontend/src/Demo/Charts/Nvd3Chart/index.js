@@ -47,7 +47,7 @@ class Nvd3Chart extends React.Component {
                     <Col md={6}>
                         <Card>
                             <Card.Header>
-                                <Card.Title as="h5">User Rating</Card.Title>
+                                <Card.Title as="h5">Book categories</Card.Title>
                             </Card.Header>
                             <Card.Body className="text-center">
                                 <PieDonutChart/>

@@ -18,7 +18,7 @@ class AddUser extends Component {
             "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka",
             "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram",
             "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana",
-            "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal"], select:'', selectvalid : 0
+            "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal"], select:'', selectvalid : 0,notify:false
         };
     }
 
@@ -178,26 +178,21 @@ class AddUser extends Component {
     }
 
     async validateUser() {
-        // fetch('http://localhost:8080/api/v1/users/', {
-        //     method: 'POST', 
-        //     headers:authHeader(),
-        //     body: JSON.stringify({name:this.state.name,email:this.state.email,password:this.state.password,phonenumber:this.state.phonenumber,address:this.state.address,role:'user'}),
-        //     })
-        //     .then(response => response.json())
-        //     .then(data=>{
-        //         console.log(data);
-        //         if (data.status === true)
-        //         {
-        //             alert(data.message)
-        //         }
-        //         else
-        //         {
-        //             alert(data.message)
-        //         }
-        //     })
+       
         let user = { name: this.state.name, email: this.state.email, password: this.state.password, phone: this.state.phonenumber,isAdmin: this.state.role,addresses:[{houseNumber:this.state.housenumber,city:this.state.city,locality:this.state.locality,country:this.state.country,state:this.state.select,pinCode:this.state.pincode}] };
         console.log(user)
         await this.props.onAddUser(user);
+        if(this.props.message.length>0)
+        {
+            await this.setState({notify:true})
+            setTimeout(()=>{
+                this.setState({notify:false})
+            },2000)
+        }
+        else
+        {
+            this.setState({notify:false})
+        }
     }
 
 
@@ -206,10 +201,14 @@ class AddUser extends Component {
         if ((this.state.emailvalid === 1) && (this.state.passwordvalid === 1) && (this.state.namevalid === 1) && (this.state.phonenumbervalid === 1) && (this.state.rolevalid === 1) && (this.state.housenoError === '') && (this.state.localityError === '') && (this.state.cityError === '') && (this.state.countryError === '') && (this.state.stateError === '') && (this.state.pincodeError === '')) {
             check = false;
         }
+
+        
         return (
             <Aux>
-                {this.props.message.includes('already') ? <Notification open={true} variant="error" msg={this.props.message}/> : null}
+                {this.props.message.includes('ID')&&this.state.notify ? <Notification open={true} variant="error" msg={this.props.message}/> : null}
+                {this.props.message.includes('Number')&&this.state.notify ? <Notification open={true} variant="error" msg={this.props.message}/> : null}
                 {this.props.message.includes('added') ? <Notification open={true} variant='success' msg={this.props.message}/> : null}
+                {this.props.message.includes('already') ? <Notification open={true} variant="error" msg={this.props.message}/> : null}
                 <Row>
                     <Col>
                         <Card>

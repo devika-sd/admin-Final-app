@@ -63,7 +63,7 @@ class Dashboard extends React.Component {
                     <Col md={6} xl={3}>
                         <Card>
                             <Card.Body>
-                                <h6 className='mb-4'>Total Booking</h6>
+                                <h6 className='mb-4'>Total Orders</h6>
                                 <div className="row d-flex align-items-center">
                                     <div className="col-9">
                                         <h3 className="f-w-300 d-flex align-items-center m-b-0"><i className="feather icon-arrow-up text-c-green f-30 m-r-5"/>{this.state.totalCount}</h3>
@@ -78,7 +78,7 @@ class Dashboard extends React.Component {
                     <Col md={6} xl={3}>
                         <Card>
                             <Card.Body>
-                                <h6 className='mb-4'>Todays booking</h6>
+                                <h6 className='mb-4'>Todays Orders</h6>
                                 <div className="row d-flex align-items-center">
                                     <div className="col-9">
                                         <h3 className="f-w-300 d-flex align-items-center m-b-0"><i className="feather icon-arrow-up text-c-green f-30 m-r-5"/>{this.state.todaysOrder}</h3>
