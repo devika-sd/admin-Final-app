@@ -12,7 +12,7 @@ export const fetchorders = (filter) => {
     //add your code
     console.log("*******ORDER********"+filter);
     return dispatch => {
-        fetch(URL+'?sort=email&' + filter , {
+        fetch(URL+'?sort=-orderDate&' + filter , {
             headers: authHeader()
         })
             .then(res => res.json())

@@ -6,6 +6,7 @@ import { Table } from 'react-bootstrap'
 import { useParams } from "react-router-dom"
 import { connect } from 'react-redux';
 import * as orderactions from '../../Actions/order-action';
+import Notification from '../Notification/Notification';
 
 
 function getModalStyle() {
@@ -34,13 +35,15 @@ function Ordermodel(props) {
     const [email, setemail] = useState(props.order.email);
     var paytype = props.order.paymentStatus ? "Online" : "COD"
     const [paymentType, setPayment] = useState(paytype);
-    const [dateTime, setDateTime] = useState(props.order.orderDate);
+    let newdate = new Date(props.order.orderDate);
+    const [dateTime, setDateTime] = useState(newdate.toLocaleString());
     var addresses = props.order.address.houseNumber + "," + props.order.address.locality + "," + props.order.address.city + "," + props.order.address.state + ',' + props.order.address.country + ',' + props.order.address.pinCode;
     const [address, setAddress] = useState(addresses);
     const [phonenumber, setContact] = useState(props.order.phonenumber);
     const [amount, setAmount] = useState(props.order.amount);
     const [bookname, setBookname] = useState('');
     const [status, setStatus] = useState(props.order.status);
+    const [notify,setNotify] = useState(false);
 
     const [enable, setEnable] = useState(true)
 
@@ -50,6 +53,7 @@ function Ordermodel(props) {
     }
     const handleClose = () => {
         setOpen(false);
+        setNotify(false);
     }
 
     const checkClose = () => {
@@ -57,6 +61,7 @@ function Ordermodel(props) {
     }
 
     const Update = async (e) => {
+        setNotify(true);
         let roleData = { status: status }
         console.log(roleData)
         setEnable(true)
@@ -90,6 +95,8 @@ function Ordermodel(props) {
 
     return (
         <div>
+            {props.message.includes('updated')&&notify ? <Notification open={true} variant='success' msg={props.message}/> : null}
+
             <button className="btn" onClick={handleopen}><span className="float-right d-flex  align-items-center">{props.name.slice(props.name.length - 6, props.name.length)}&nbsp;<i className="fa fa-info-circle f-22 m-r-10 text-c-green" /></span></button>
             <Modal
                 open={open}
@@ -159,10 +166,11 @@ function Ordermodel(props) {
                                             </Form.Group>
 
                                         </Col>
-                                        <Table striped bordered hover style={{ marginLeft: "15px", marginRight: "15px" }}>
+                                        
+                                        <Table striped bordered hover style={{ width:"100%",margin:'10px' }}>
                                             <thead>
                                                 <tr>
-                                                    <th>Book Quantity</th>
+                                                    <th>Quantity</th>
                                                     <th>ISBN</th>
                                                 </tr>
                                             </thead>
@@ -251,6 +259,12 @@ function Ordermodel(props) {
         </div>
     )
 }
+const mapStateToProps = (state) => {
+    return {
+        message: state.orderReducer.message
+    }
+}
+
 
 const mapDispatchToProps = (dispatch) => {
     return {
@@ -259,4 +273,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(null, mapDispatchToProps)(Ordermodel);
+export default connect(mapStateToProps, mapDispatchToProps)(Ordermodel);

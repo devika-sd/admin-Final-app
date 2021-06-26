@@ -20,7 +20,7 @@ import Notification from '../Notification/Notification';
 class UserList extends React.Component {
     constructor(props) {
         super(props)
-        this.state = { users: [], word: '', active: 1, maxpage: 1, limit: 5, pageno: [1, 2, 3], open: false }
+        this.state = { users: [], word: '', active: 1, maxpage: 1, limit: 5, pageno: [1, 2, 3], open: false,isAdmin:'' }
     }
 
     componentDidMount() {
@@ -32,7 +32,21 @@ class UserList extends React.Component {
         this.props.word === '' ? await this.getUsers() : await this.props.onfilterUsers(this.props.word, this.state.active, this.state.limit);
     }
     async getUsers() {
-        await this.props.onGetUsers("page=" + this.state.active + "&limit=" + this.state.limit);
+        if(this.state.isAdmin === '')
+        {
+            await this.props.onGetUsers("page=" + this.state.active + "&limit=" + this.state.limit);
+        }
+        else
+        {
+            await this.props.onGetUsers("page=" + this.state.active + "&limit=" + this.state.limit +"&isAdmin="+this.state.isAdmin);
+        }
+    }
+
+    async setRole(value)
+    {
+        console.log("value **"+value )
+        await this.setState({isAdmin:value});
+        this.getUsers();
     }
     async updatepagination(current) {
         var max = 1;
@@ -135,7 +149,12 @@ class UserList extends React.Component {
                             <Card.Header style={{marginLeft:"0",background: 'transparent',width:"100%",paddingTop:"10px",paddingBottom:"10px"}} className="navbar pcoded-header navbar-expand-lg">
                                         <div style={{background: 'transparent'}} className="collapse navbar-collapse">
                                         <Card.Title as='h5'>Users</Card.Title>
-                                            <NavSearch />
+                                            <NavSearch role={this.state.isAdmin} />
+                                            <Col style={{textAlign:'right'}}>
+                                                <i class="fa fa-users f-20" aria-hidden="true" onClick={()=>{this.setRole('')}}></i>&nbsp; &nbsp; &nbsp;
+                                                <i class="fa fa-user f-20" aria-hidden="true" onClick={()=>{this.setRole(false)}}></i>  &nbsp; &nbsp; &nbsp; 
+                                                <i class="fa fa-user-secret f-20" aria-hidden="true" onClick={()=>{this.setRole(true)}}></i>      
+                                            </Col>
                                         </div>  
                             </Card.Header>
                             <Card.Body className='px-0 py-2'>
