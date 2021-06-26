@@ -163,7 +163,7 @@ function ProfilePage(props) {
                         textTransform: 'capitalize',
                         borderRadius: '5px',
                         outline: 'none'
-                    }} type="text" value={newAdd} placeholder="Enter Name" />
+                    }} as="textarea" value={newAdd} placeholder="Enter Name" />
                 </Col>
             </Form.Group>
         })

@@ -1,10 +1,12 @@
-import React,{ useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from '@material-ui/core/Modal';
 import { makeStyles } from '@material-ui/core/styles';
 import { Card, Form, Button, Row, Col } from 'react-bootstrap'
+import { Table } from 'react-bootstrap'
 import { useParams } from "react-router-dom"
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import * as orderactions from '../../Actions/order-action';
+
 
 function getModalStyle() {
     return {
@@ -16,12 +18,12 @@ function getModalStyle() {
 const useStyles = makeStyles((theme) => ({
     paper: {
         position: 'absolute',
-        width: '800px',
-        backgroundColor: 'black',
-        boxShadow: theme.shadows[5],
-        padding: theme.spacing(2, 4, 3),
+        width: '1000px',
+        padding: theme.spacing(2, 4, 3)
     },
 }));
+
+
 
 function Ordermodel(props) {
     console.log(props.order);
@@ -35,7 +37,7 @@ function Ordermodel(props) {
     const [dateTime, setDateTime] = useState(props.order.orderDate);
     var addresses = props.order.address.houseNumber + "," + props.order.address.locality + "," + props.order.address.city + "," + props.order.address.state + ',' + props.order.address.country + ',' + props.order.address.pinCode;
     const [address, setAddress] = useState(addresses);
-    // const [phonenumber, setContact] = useState(props.order.phonenumber);
+    const [phonenumber, setContact] = useState(props.order.phonenumber);
     const [amount, setAmount] = useState(props.order.amount);
     const [bookname, setBookname] = useState('');
     const [status, setStatus] = useState(props.order.status);
@@ -55,57 +57,46 @@ function Ordermodel(props) {
     }
 
     const Update = async (e) => {
-        let roleData = {status: status }
+        let roleData = { status: status }
         console.log(roleData)
         setEnable(true)
-        await props.updateorderbyid(props.order._id,roleData)
+        await props.updateorderbyid(props.order._id, roleData)
         await props.onGetorders("");
     }
     const Edit = (event) => {
         console.log('Edit')
         setEnable(false)
     }
+    const cancel = (event) =>{
+        console.log('cancel')
+        setEnable(true)
+        handleClose();
+    }
 
-    const onChangeRadio =(e)=>{
+    const onChangeRadio = (e) => {
         console.log(e.target.value);
         setStatus(e.target.value);
     }
 
     var booklist = props.order.books.map((book, i) => {
         return (
-            <>
-                <Col sm={3}>
-                    <Form.Control readOnly plaintext style={{
-                        border: '1px solid lightgrey',
-                        padding: '10px 15px',
-                        borderRadius: '5px',
-                        outline: 'none'
-                    }} type="text" value={book.quantity} placeholder="Enter Bookname">
-                    </Form.Control>
-                </Col>
-                <Col sm={9}>
-                    <Form.Control readOnly plaintext style={{
-                        border: '1px solid lightgrey',
-                        padding: '10px 15px',
-                        borderRadius: '5px',
-                        outline: 'none'
-                    }} type="text" value={book.isbn} placeholder="Enter Bookname">
-                    </Form.Control>
-                </Col>
-            </>
+            <tr key={i}>
+                <td> {book.quantity} </td>
+                <td> {book.isbn} </td>
+            </tr>
         )
     })
 
 
     return (
         <div>
-            <button className="btn" style={{ color: 'blue' }} onClick={handleopen}>{props.name.slice(props.name.length-6,props.name.length)}</button>
+            <button className="btn" onClick={handleopen}><span className="float-right d-flex  align-items-center">{props.name.slice(props.name.length - 6, props.name.length)}&nbsp;<i className="fa fa-info-circle f-22 m-r-10 text-c-green" /></span></button>
             <Modal
                 open={open}
                 aria-labelledby="simple-modal-title"
                 aria-describedby="simple-modal-description"
             >
-                <div style={modalStyle} className={classes.paper}>
+                <div style={modalStyle} className={classes.paper+' ordermodel'}>
                     <Card className="border border-muted" style={{
                         padding: '10px 15px',
                         margin: '15px auto',
@@ -115,274 +106,143 @@ function Ordermodel(props) {
                         fontFamily: 'monospace',
                         display: 'block'
                     }}>
+
+                        <Card.Header>
+                            <i className="fa fa-times" style={{ float: 'right', fontSize: '20px' }} onClick={checkClose}></i>
+                            <Card.Title as="h5">
+                                <h4>Order List</h4>
+                            </Card.Title>
+                            {/* <hr></hr> */}
+                        </Card.Header>
                         <Card.Body>
-                            <i className="fas fa-times" style={{ float: 'right' }} onClick={checkClose}></i>
-                            <Card.Title style={{
-                                textAlign: 'center',
-                                fontSize: '30px',
-                                marginBottom: '10%'
-                            }}>Order List </Card.Title>
                             <Card.Text>
 
                                 {/* Disabled */}
                                 {enable &&
-                                    <Form>
-                                        <Form.Group as={Row} className="mb-3" >
-                                            <Form.Label style={{
-                                                // border: '1px solid lightgrey',
-                                                padding: '10px 15px',
-                                                textTransform: 'capitalize',
-                                                fontSize: '18px'
-                                                // borderRadius: '5px',
-                                                // outline: 'none'
-
-                                            }} column sm={3}>email</Form.Label>
-                                            <Col sm={9}>
-                                                <Form.Control readOnly plaintext style={{
-                                                    border: '1px solid lightgrey',
-                                                    padding: '10px 15px',
-                                                    textTransform: 'capitalize',
-                                                    borderRadius: '5px',
-                                                    outline: 'none'
-                                                }} type="text" value={email} placeholder="Enter Name" />
-                                            </Col>
-
-                                        </Form.Group>
-
-                                        <Form.Group as={Row} className="mb-3" >
-                                            <Form.Label style={{
-                                                // border: '1px solid lightgrey',
-                                                padding: '10px 15px',
-                                                textTransform: 'capitalize',
-                                                fontSize: '18px'
-                                                // borderRadius: '5px',
-                                                // outline: 'none'
-
-                                            }} column sm={3}>Payment Type</Form.Label>
-                                            <Col sm={9}>
-
-                                                <Form.Control readOnly plaintext style={{
-                                                    border: '1px solid lightgrey',
-                                                    padding: '10px 15px',
-                                                    borderRadius: '5px',
-                                                    outline: 'none'
-                                                }} type="email" value={paymentType} placeholder="Enter the type of payment" />
-                                            </Col>
-
-                                        </Form.Group>
-                                        <Form.Group as={Row} className="mb-3" >
-                                            <Form.Label style={{
-                                                // border: '1px solid lightgrey',
-                                                padding: '10px 15px',
-                                                textTransform: 'capitalize',
-                                                fontSize: '18px'
-                                                // borderRadius: '5px',
-                                                // outline: 'none'
-
-                                            }} column sm={3}>Date Time</Form.Label>
-                                            <Col sm={9}>
-                                                <Form.Control readOnly plaintext style={{
-                                                    border: '1px solid lightgrey',
-                                                    padding: '10px 15px',
-                                                    borderRadius: '5px',
-                                                    outline: 'none'
-                                                }} type="text" value={dateTime} placeholder="Enter Ordered Date and Time" />
-                                            </Col>
-
-                                        </Form.Group>
-                                        <Form.Group as={Row} className="mb-3" >
-                                            <Form.Label style={{
-                                                // border: '1px solid lightgrey',
-                                                padding: '10px 15px',
-                                                textTransform: 'capitalize',
-                                                fontSize: '18px'
-                                                // borderRadius: '5px',
-                                                // outline: 'none'
-
-                                            }} column sm={3}>Address</Form.Label>
-                                            <Col sm={9}>
-                                                <Form.Control readOnly plaintext style={{
-                                                    border: '1px solid lightgrey',
-                                                    padding: '10px 15px',
-                                                    borderRadius: '5px',
-                                                    outline: 'none'
-                                                }} type="text" value={address} placeholder="Enter Address" />
-                                            </Col>
-
-                                        </Form.Group>
-
-                                        {/* <Form.Group as={Row} className="mb-3" >
-                                            <Form.Label style={{
-                                                // border: '1px solid lightgrey',
-                                                padding: '10px 15px',
-                                                textTransform: 'capitalize',
-                                                fontSize: '18px'
-                                                // borderRadius: '5px',
-                                                // outline: 'none'
-
-                                            }} column sm={3}>Phone Number</Form.Label>
-                                            <Col sm={9}>
-                                                <Form.Control readOnly plaintext style={{
-                                                    border: '1px solid lightgrey',
-                                                    padding: '10px 15px'    ,
-                                                    borderRadius: '5px',
-                                                    outline: 'none'
-                                                }} type="text" value={phonenumber} placeholder="Enter Contact Number">
-                                                </Form.Control>
-                                            </Col>
-                                        </Form.Group> */}
-
-                                        <Form.Group as={Row} className="mb-3" >
-                                            <Form.Label style={{
-                                                // border: '1px solid lightgrey',
-                                                padding: '10px 15px',
-                                                textTransform: 'capitalize',
-                                                fontSize: '18px'
-                                                // borderRadius: '5px',
-                                                // outline: 'none'
-
-                                            }} column sm={3}>Amount</Form.Label>
-                                            <Col sm={9}>
-                                                <Form.Control readOnly plaintext style={{
-                                                    border: '1px solid lightgrey',
-                                                    padding: '10px 15px',
-                                                    borderRadius: '5px',
-                                                    outline: 'none'
-                                                }} type="text" value={amount} placeholder="Enter Amount">
-                                                </Form.Control>
-                                            </Col>
-                                        </Form.Group>
-
-                                        <Form.Group as={Row} className="mb-3" >
-                                            <Form.Label style={{
-                                                // border: '1px solid lightgrey',
-                                                padding: '10px 15px',
-                                                textTransform: 'capitalize',
-                                                fontSize: '18px'
-                                                // borderRadius: '5px',
-                                                // outline: 'none'
-
-                                            }} column sm={3}>Status</Form.Label>
-                                            <Col sm={9}>
-                                                <Form.Control readOnly plaintext style={{
-                                                    border: '1px solid lightgrey',
-                                                    padding: '10px 15px',
-                                                    borderRadius: '5px',
-                                                    outline: 'none'
-                                                }} type="text" value={status} placeholder="Enter Status">
-                                                </Form.Control>
-                                            </Col>
-                                        </Form.Group>
-
-                                        <Form.Group as={Row} className="mb-3" >
-                                            <Form.Label style={{
-                                                // border: '1px solid lightgrey',
-                                                padding: '10px 15px',
-                                                textTransform: 'capitalize',
-                                                fontSize: '18px'
-                                                // borderRadius: '5px',
-                                                // outline: 'none'
-
-                                            }} column sm={6}>Book Quantity</Form.Label>
-                                            <Form.Label style={{
-                                                // border: '1px solid lightgrey',
-                                                padding: '10px 15px',
-                                                textTransform: 'capitalize',
-                                                fontSize: '18px',
-                                                textAlign:'left'
-                                                // borderRadius: '5px',
-                                                // outline: 'none'
-
-                                            }} column sm={6}>Book ISBN</Form.Label>
-                                            {booklist}
-                                        </Form.Group>
-
-                                        <Form.Group as={Row}>
-                                            <Col style={{ margin: 'auto' }} sm={6}>
-                                                <Button variant="primary" block onClick={Edit}>EDIT</Button>
-                                            </Col>
-                                            {/* <Col sm={6}>
-                                        <Button disabled variant="primary" block onClick={Update}>UPDATE</Button>
-                                    </Col> */}
-                                        </Form.Group>
-                                    </Form>
-                                }
-
-                                {/* Enabled */}
-                                {!enable && <Form>
-                                    <Form.Group as={Row} className="mb-3" >
-                                        <Form.Label style={{
-                                            // border: '1px solid lightgrey',
-                                            padding: '10px 15px',
-                                            textTransform: 'capitalize',
-                                            fontSize: '18px'
-                                            // borderRadius: '5px',
-                                            // outline: 'none'
-
-                                        }} column sm={3}>Status</Form.Label>
-                                        <Col sm={9}>
-                                            {/* <Form.Control type="text" value={status} placeholder="Enter Name" /> */}
-                                            {/* ["new", "packed","shipped", "completed", "cancelled", "delayed"] */}
+                                    <Row>
+                                        <Col md={6}>
                                             <Form>
-                                                    <div key='status' className="mb-3" onChange={onChangeRadio}>
-                                                        <Form.Check
-                                                            type='radio'
-                                                            id='status'
-                                                            name="group1"
-                                                            label='new'
-                                                            value='new'
-                                                        />
-                                                        <Form.Check
-                                                            type='radio'
-                                                            id='status'
-                                                            name="group1"
-                                                            label='Shipped'
-                                                            value='shipped'
-                                                        />
-                                                        <Form.Check
-                                                            type='radio'
-                                                            id='status'
-                                                            name="group1"
-                                                            label='Packed'
-                                                            value='packed'
-                                                        />
-                                                        <Form.Check
-                                                            type='radio'
-                                                            id='status'
-                                                            name="group1"
-                                                            label='Completed'
-                                                            value='completed'
-                                                        />
-                                                        <Form.Check
-                                                            type='radio'
-                                                            id='status'
-                                                            name="group1"
-                                                            label='Delayed'
-                                                            value='delayed'
-                                                        />
-                                                        <Form.Check
-                                                            type='radio'
-                                                            id='status'
-                                                            name="group1"
-                                                            label='Cancelled'
-                                                            value='cancelled'
-                                                        />
-                                                    </div>
+                                                <Form.Group controlId="formBasicEmail">
+                                                    <Form.Label>Email</Form.Label>
+                                                    <Form.Control type="text" value={email} placeholder="Enter Email" />
+                                                </Form.Group>
+
+                                                <Form.Group controlId="formBasicEmail">
+                                                    <Form.Label>Payment Type</Form.Label>
+                                                    <Form.Control type="text" value={paymentType} placeholder="Enter Payment type" />
+                                                </Form.Group>
+
+                                                <Form.Group controlId="formBasicEmail">
+                                                    <Form.Label>Status</Form.Label>
+                                                    <Form.Control type="text" value={status} placeholder="Enter Status" />
+                                                </Form.Group>
+
+
                                             </Form>
                                         </Col>
-                                    </Form.Group>
 
-                                    <Form.Group as={Row}>
-                                        {/* <Col sm={6}>
-                                    <Button disabled variant="primary" block onClick={Edit}>EDIT</Button>
-                                </Col> */}
-                                        <Col style={{ margin: 'auto' }} sm={6}>
-                                            <Button variant="primary" block onClick={Update}>UPDATE</Button>
+                                        <Col md={6}>
+
+                                            <Form.Group controlId="formBasicEmail">
+                                                <Form.Label>Date Time</Form.Label>
+                                                <Form.Control type="text" value={dateTime} placeholder="Enter Date and time" />
+                                            </Form.Group>
+
+                                            <Form.Group controlId="formBasicEmail">
+                                                <Form.Label>Amount</Form.Label>
+                                                <Form.Control type="text" value={amount} placeholder="Enter Address" />
+                                            </Form.Group>
+
+                                            <Form.Group controlId="formBasicEmail">
+                                                <Form.Label>Address</Form.Label>
+                                                <Form.Control as="textarea" value={address} placeholder="Enter Address" />
+                                            </Form.Group>
+
                                         </Col>
-                                    </Form.Group>
-
-                                </Form>
+                                        <Table striped bordered hover style={{ marginLeft: "15px", marginRight: "15px" }}>
+                                            <thead>
+                                                <tr>
+                                                    <th>Book Quantity</th>
+                                                    <th>ISBN</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {booklist}
+                                            </tbody>
+                                        </Table>
+                                        <Button style={{ width: "90px", margin: 'auto' }} onClick={Edit} variant="primary">EDIT</Button>
+                                    </Row>
                                 }
+
+                                {!enable &&
+                                    <Row>
+                                        <Col md={4}>
+                                            <Form>
+                                                <Form.Group controlId="formBasicEmail">
+                                                    <Form.Label>Status</Form.Label>
+                                                </Form.Group>
+                                            </Form>
+                                        </Col>
+
+                                        <Col md={3} key='status' onChange={onChangeRadio}>
+
+                                            <Form.Check
+                                                type='radio'
+                                                id='status'
+                                                name="group1"
+                                                label='New'
+                                                value='new'
+                                            />
+                                            <Form.Check
+                                                type='radio'
+                                                id='status'
+                                                name="group1"
+                                                label='Packed'
+                                                value='packed'
+                                            />
+                                            <Form.Check
+                                                type='radio'
+                                                id='status'
+                                                name="group1"
+                                                label='Shipped'
+                                                value='shipped'
+                                            />
+                                        </Col>
+                                        <Col md={2} key='status' onChange={onChangeRadio}>
+
+                                            <Form.Check
+                                                type='radio'
+                                                id='status'
+                                                name="group1"
+                                                label='Completed'
+                                                value='completed'
+                                            />
+                                            <Form.Check
+                                                type='radio'
+                                                id='status'
+                                                name="group1"
+                                                label='Delayed'
+                                                value='delayed'
+                                            />
+                                            <Form.Check
+                                                type='radio'
+                                                id='status'
+                                                name="group1"
+                                                label='Cancelled'
+                                                value='cancelled'
+                                            />
+                                        </Col>
+                                        <Col sm={12} md={12} style={{width:'100%',textAlign:'center'}}>
+                                            <div style={{marginTop:'50px'}}>
+                                            <Button style={{ width: "90px", marginTop: '50px', margin:'10px' }} onClick={cancel} variant="primary">CANCEL</Button>
+                                            <Button style={{ width: "90px", marginTop: '50px', margin:'10px'  }} onClick={Update} variant="primary">UPDATE</Button>
+
+                                            </div>
+                                        </Col>
+                                    </Row>
+                                }
+
+
                             </Card.Text>
                         </Card.Body>
                     </Card>
@@ -394,9 +254,9 @@ function Ordermodel(props) {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        updateorderbyid: (id,orderdata)=>dispatch(orderactions.updateorders(id,orderdata)),
-        onGetorders: (filter)=>dispatch(orderactions.fetchorders(filter))
+        updateorderbyid: (id, orderdata) => dispatch(orderactions.updateorders(id, orderdata)),
+        onGetorders: (filter) => dispatch(orderactions.fetchorders(filter))
     }
 }
 
-export default connect(null, mapDispatchToProps)( Ordermodel);
+export default connect(null, mapDispatchToProps)(Ordermodel);
