@@ -10,10 +10,7 @@ const reducer = (state = initialState, action) =>{
             return {
                 authenticated: action.payload
             }  
-        case actions.RESET_AUTH:
-            return {
-                state : initialState
-            }     
+        case actions.RESET_AUTH: return initialState    
         default : return state
     }
 

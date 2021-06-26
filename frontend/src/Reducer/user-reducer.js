@@ -55,10 +55,7 @@ const reducer = (state = initialState, action) => {
                 users: action.payload.data,
                 totaluser: action.payload.total
             }
-        case actions.RESET_USER:
-            return {
-                state:initialState
-            }
+        case actions.RESET_USER: return initialState 
         default: return state
     }
 

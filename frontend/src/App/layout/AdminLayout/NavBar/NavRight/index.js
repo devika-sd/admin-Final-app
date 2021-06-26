@@ -1,19 +1,37 @@
 import React, { Component } from 'react';
 import {Dropdown} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
+import { withRouter } from "react-router";
 
 import ChatList from './ChatList';
 import Aux from "../../../../../hoc/_Aux";
 import DEMO from "../../../../../store/constant";
+import currentUser from '../../../../../services/tokendecoder';
 
 import Avatar1 from '../../../../../assets/images/user/avatar-1.jpg';
 import Avatar2 from '../../../../../assets/images/user/avatar-2.jpg';
 import Avatar3 from '../../../../../assets/images/user/avatar-3.jpg';
 
+import * as useraction from '../../../../../Actions/user-action';
+import * as authaction from '../../../../../Actions/auth-actions';
+import * as orderaction from '../../../../../Actions/order-action';
+import { connect } from 'react-redux';
+
 class NavRight extends Component {
     state = {
-        listOpen: false
+        listOpen: false,
+        reset:false
     };
+
+    resetall()
+    {
+        console.log(this.props.history);
+        this.props.history.push('/');
+        localStorage.clear();
+        this.props.authReset();
+        this.props.userReset();
+        this.props.orderReset();
+    }
 
     render() {
 
@@ -88,8 +106,8 @@ class NavRight extends Component {
                                     <span>John Doe</span>
                                 </div>
                                 <ul className="pro-body">
-                                    <Link to='/profile'><li><a href={DEMO.BLANK_LINK} className="dropdown-item"><i className="feather icon-user"/> Profile</a></li></Link>
-                                    <li><a href={DEMO.BLANK_LINK} className="dropdown-item"><i className="feather icon-log-out"/> Logout</a></li>
+                                    <Link to={'/profile/'+currentUser.currentUser()}><li><a href={DEMO.BLANK_LINK} className="dropdown-item"><i className="feather icon-user"/> Profile</a></li></Link>
+                                    <li><a className="dropdown-item"  onClick={()=>{this.resetall()}}><i className="feather icon-log-out"/> Logout</a></li>
                                 </ul>
                             </Dropdown.Menu>
                         </Dropdown>
@@ -101,4 +119,12 @@ class NavRight extends Component {
     }
 }
 
-export default NavRight;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        authReset: () => dispatch({type:authaction.RESET_AUTH}),
+        userReset: () => dispatch({type:orderaction.RESET_ORDERS}),
+        orderReset: ()=>dispatch({type:useraction.RESET_USER}),
+    }
+}
+
+export default withRouter(connect(null, mapDispatchToProps)(NavRight));

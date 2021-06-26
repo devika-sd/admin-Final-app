@@ -25,10 +25,7 @@ const reducer = (state = initialState, action) =>{
                 ...state,
                 message: action.payload.message
             }
-        case actions.RESET_ORDERS:
-            return {
-                state:initialState
-            }
+        case actions.RESET_ORDERS: return initialState
         default : return state
     }
  
