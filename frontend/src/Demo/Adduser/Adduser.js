@@ -4,6 +4,7 @@ import { Row, Col, Card, Form, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import * as actions from '../../Actions/user-action';
 import Aux from "../../hoc/_Aux";
+import Notification from '../Notification/Notification';
 
 class AddUser extends Component {
     constructor() {
@@ -197,7 +198,6 @@ class AddUser extends Component {
         let user = { name: this.state.name, email: this.state.email, password: this.state.password, phone: this.state.phonenumber,isAdmin: this.state.role,addresses:[{houseNumber:this.state.housenumber,city:this.state.city,locality:this.state.locality,country:this.state.country,state:this.state.select,pinCode:this.state.pincode}] };
         console.log(user)
         await this.props.onAddUser(user);
-        alert(this.props.message);
     }
 
 
@@ -208,6 +208,8 @@ class AddUser extends Component {
         }
         return (
             <Aux>
+                {this.props.message.includes('already') ? <Notification open={true} variant="error" msg={this.props.message}/> : null}
+                {this.props.message.includes('added') ? <Notification open={true} variant='success' msg={this.props.message}/> : null}
                 <Row>
                     <Col>
                         <Card>
@@ -217,7 +219,7 @@ class AddUser extends Component {
                             <Card.Body>
                                 <Row>
                                     <Col md={6}>
-                                        <Form>
+                                        <Form autoComplete>
                                             <Form.Group controlId="formBasicEmail">
                                                 <Form.Label>Name</Form.Label>
                                                 <Form.Control onChange={this.name.bind(this)} type="text" placeholder="Enter Name" />

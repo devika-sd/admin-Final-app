@@ -7,6 +7,8 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from "react-router-dom"
 import { connect } from 'react-redux';
 import * as useractions from '../../Actions/user-action';
+import Notification from '../Notification/Notification';
+
 
 function ProfilePage(props) {
     let { id } = useParams();
@@ -75,8 +77,8 @@ function ProfilePage(props) {
     }
     const onPasswordChange = (event) => {
         var contactValue = (event.target.value);
-        const expression = new RegExp('^(?=.[0-9])(?=.[!@#$%^&])[a-zA-Z0-9!@#$%^&]{6,16}$');
-        // console.log(nameValue);
+        const expression = new RegExp('^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,12}$');
+         console.log(expression.test(contactValue));
         if (!(expression.test(contactValue))) {
             setPassword(contactValue)
             setPasswordError(false)
@@ -89,13 +91,13 @@ function ProfilePage(props) {
 
     const onCPasswordChange = (event) => {
         var contactValue = (event.target.value);
-        const expression = new RegExp('^(?=.[0-9])(?=.[!@#$%^&])[a-zA-Z0-9!@#$%^&]{6,16}$');
-        // console.log(nameValue);
+        const expression = new RegExp('^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,12}$');
+        console.log(expression.test(contactValue));
         if (!(expression.test(contactValue))) {
             setCPassword(contactValue)
             setCPasswordError(false)
         }
-        else {
+        else{
             setCPassword(contactValue)
             setCPasswordError(true)
         }
@@ -165,6 +167,8 @@ function ProfilePage(props) {
     }
     return (
         <Aux>
+            {props.message.includes('updated') ? <Notification open={true} variant='success' msg={props.message}/> : null}
+            {props.message.includes('Please') ? <Notification open={true} variant='error' msg={props.message}/> : null}
             <Row>
                 <Col md={4} xl={4}>
                     <Card className='card-event'>
@@ -283,9 +287,12 @@ function ProfilePage(props) {
                                         <Col sm={9}>
                                             <Form.Control type="text" value={name} onChange={onNameChange} placeholder="Enter Name" />
                                         </Col>
+                                        <Col sm={3}></Col>
+                                            <Col sm={9}>
                                         {!nameError && <Form.Text className="text-danger">
                                             Please Enter Valid Name (paddu)
                                         </Form.Text>}
+                                        </Col>
                                     </Form.Group>
 
                                     <Form.Group as={Row} className="mb-3" >
@@ -302,9 +309,12 @@ function ProfilePage(props) {
 
                                             <Form.Control type="email" value={email} onChange={onEmailChange} placeholder="Enter Email" />
                                         </Col>
+                                        <Col sm={3}></Col>
+                                            <Col sm={9}>
                                         {!emailError && <Form.Text className="text-danger">
                                             Please Enter Valid Email (paddu@gmail.com)
                                         </Form.Text>}
+                                        </Col>
                                     </Form.Group>
                                     {passwordEnable &&
                                         <Form.Group as={Row} className="mb-3" >
@@ -320,9 +330,12 @@ function ProfilePage(props) {
                                             <Col sm={9}>
                                                 <Form.Control type="text" value={password} onChange={onPasswordChange} placeholder="New Password" />
                                             </Col>
+                                            <Col sm={3}></Col>
+                                            <Col sm={9}>
                                             {!passwordError && <Form.Text className="text-danger">
-                                                Please Enter Valid Password (paddu@0y)
+                                                Please Enter Valid Password (Paddu@0y)
                                             </Form.Text>}
+                                            </Col>
                                         </Form.Group>
 
                                     }
@@ -340,9 +353,12 @@ function ProfilePage(props) {
                                             <Col sm={9}>
                                                 <Form.Control type="text" value={cpassword} onChange={onCPasswordChange} placeholder="Confirm Password" />
                                             </Col>
+                                            <Col sm={3}></Col>
+                                            <Col sm={9}>
                                             {!cpasswordError && <Form.Text className="text-danger">
                                                 Please Enter Valid Password (paddu@0y)
                                             </Form.Text>}
+                                            </Col>
                                         </Form.Group>
 
                                     }
@@ -361,9 +377,12 @@ function ProfilePage(props) {
                                             <Form.Control type="text" value={phone} onChange={onContactChange} placeholder="Enter Contact Number" />
                                         </Col>
                                         <Form.Text sm={3}></Form.Text>
+                                        <Col sm={3}></Col>
+                                            <Col sm={9}>
                                         {!contactError && <Form.Text className="text-danger" sm={9}>
                                             Please Enter Valid Contact number (9284556633)
                                         </Form.Text>}
+                                        </Col>
                                     </Form.Group>
 
                                     <Form.Group as={Row} sm={12} style={{ marginTop: '50px', width: "100%", textAlign: 'center' }}>
@@ -390,7 +409,8 @@ const mapStateToProps = (state) => {
     return {
         users: state.userReducer.users,
         authenticated: state.authReducer.authenticated,
-        currentuser:state.userReducer.currentUser
+        currentuser:state.userReducer.currentUser,
+        message:state.userReducer.message
     }
 }
 

@@ -8,6 +8,7 @@ import Admintable from './Admintable';
 // import * as orderactions from '../../Actions/order-action';
 // import { connect } from 'react-redux';
 import authHeader from '../../services/auth-header';
+import Bookratingdata from '../Charts/Nvd3Chart/Bookratingdata';
 
 class Dashboard extends React.Component {
 
@@ -127,6 +128,16 @@ class Dashboard extends React.Component {
                         <Card>
                             <Card.Body>
                                 <Index/>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                    <Col sm={12} xl={12} md={8}>
+                        <Card>
+                            <Card.Header>
+                                <Card.Title as='h5'>Books Rating</Card.Title>
+                            </Card.Header> 
+                            <Card.Body>
+                              <Bookratingdata />
                             </Card.Body>
                         </Card>
                     </Col>

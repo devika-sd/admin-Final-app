@@ -4,6 +4,7 @@ export const FETCH_ORDERS = "FETCH_ORDERS"
 export const UPDATE_ORDERS = "UPDATE_ORDERS"
 export const ERROR_ORDERS = "ERROR_ORDERS"
 export const RESET_ORDERS = "RESET_ORDERS"
+export const FETCH_STATUS_COUNT = "FETCH_STATUS_COUNT"
 
 const URL ="http://localhost:8080/api/v1/orders/";
 
@@ -47,6 +48,22 @@ export const updateorders = (_id,orderdetails) => {
                         payload: data.message
                     });
                 }
+            })
+    }
+}
+
+export const fetchOrderStatusCount = () => {
+
+    return dispatch => {
+        fetch(URL + "piecount", {
+            headers: authHeader()
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log("********FETCH_STATUS_COUNT******")
+                console.log(data.data);
+
+                dispatch({ type: FETCH_STATUS_COUNT, payload: data.data });
             })
     }
 }

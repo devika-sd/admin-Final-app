@@ -16,7 +16,7 @@ const blockUser = asyncHandler(async (req, res, next) => {
     if (!user) throw new Error(`Email ID(${req.params.email}) is not found`)
     console.log(req.params.isBlocked);
     let logmessage = "";
-    req.params.isBlocked ? logmessage = "user is blocked successfully" : logmessage = "user is blocked successfully";
+    user.isBlocked ? logmessage = "user is blocked successfully" : logmessage = "user is Unblocked successfully";
     res.json({ success: true, message: logmessage, user })
 })
 const adminSignin = asyncHandler(async (req, res, next) => {
@@ -91,11 +91,11 @@ const updateUserDetails = asyncHandler(async (req, res, next) => {
         await users.save().then(saved=>{
             if(saved===users)
             {
-                res.json({ success: true, data: [users] });
+                res.json({ success: true, data: [users],message:"User details updated successfully" });
             }
             else
             {
-                res.json({ success: false, "message":"details not updated" });
+                res.json({ success: false, message:"details not updated" });
             }
         });
         
@@ -113,7 +113,7 @@ const deleteUsersByEmail = asyncHandler(async (req, res, next) => {
     let userDel = await Users.findOneAndDelete({ email: req.params.email })
     console.log(userDel)
     if (!userDel) throw new Error(`Email ID(${req.params.email}) is not found`)
-    res.status(201).json({ success: true, data: userDel })
+    res.status(201).json({ success: true, data: userDel,message:"user is deleted successfully" })
 
 })
 

@@ -37,6 +37,39 @@ const addOrder = asyncHandler(async (req, res, next) => {
     console.log(order);
     res.status(201).json({ success: true, data: order })
 })
+const ordersCount = asyncHandler(async (req, res) => {
+    // let orders = await Orders.count({ status: req.params.status })
+    const statusArr = [
+        { "New": 0 },
+        { "Packed": 0 },
+        { "Shipped": 0 },
+        { "Completed": 0 },
+        { "Cancelled": 0 },
+        { "Delayed": 0 }
+    ]
+
+    for (let index = 0; index < statusArr.length; index++) {
+        const element = statusArr[index];
+        for (var key in element) {
+            let count = await Orders.count({ status: key.toLowerCase() })
+            console.log(key + "-->  " + count);
+            statusArr[index][key] = count
+        }
+
+    }
+
+    // for (let index = 0; index < statusArr.length; index++) {
+    //     const element = array[index];
+    //     let count = await Orders.count({ status: element })
+    //     statusCount.push(count)
+    //     console.log(count);
+    // }
+    // console.log(statusCount);
+    res.json({ success: true, data: statusArr })
+    // res.send('count')
+
+})
 
 
-module.exports = { updateOrderById, fetchAllOrders, addOrder,getOrderCount };
+
+module.exports = { updateOrderById, fetchAllOrders, addOrder,getOrderCount,ordersCount };

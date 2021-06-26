@@ -26,7 +26,7 @@ export const filteruserbyname = (name,page,limit) => {
     }
 }
 
-export const fetchusers = (filter) => {
+export const fetchusers = (filter,message='') => {
     //add your code
     console.log("***************"+filter);
     return dispatch => {
@@ -37,7 +37,8 @@ export const fetchusers = (filter) => {
             .then(data => {
                 //this.setState({ users: data.data })
                 console.log(data.total)
-                dispatch({ type: FETCH_USERS, payload: data });
+                var newdata = {...data,message}
+                dispatch({ type: FETCH_USERS, payload: newdata });
             })
     }
 }
@@ -56,13 +57,13 @@ export const updateusers = (_id,roleData) => {
                 console.log("*************"+data.success);
                 if (data.success === true) {
                     // this.setState({ message: "Successfully inserted" })
-                    dispatch({ type: UPDATE_USER, payload: data.data });
+                    dispatch({ type: UPDATE_USER, payload: data });
                 }
                 else{
                     console.log("*************"+data.success);
                     dispatch({
                         type: ERROR_USER,
-                        payload: data.message
+                        payload: data
                     });
                 }
             })
@@ -82,7 +83,8 @@ export const deleteusers = (email, filter) => {
                 return response.json();
             })
             .then((data) => {
-                dispatch(fetchusers(filter));
+                console.log(data)
+                dispatch(fetchusers(filter,data.message));
             });
     }
 }
@@ -100,8 +102,8 @@ export const blockusers = (email, status, filter) => {
                 return response.json();
             })
             .then((data) => {
-                // dispatch({type: BLOCK_USER,payload:data.user});
-                dispatch(fetchusers(filter));
+                //dispatch({type: MESSAGE_USER,payload:data});
+                dispatch(fetchusers(filter,data.message));
             });
     }
 }
@@ -158,7 +160,7 @@ export const addusers = (user) => {
                 console.log(users)
                 if(users.success)
                 {
-                    dispatch(fetchusers(""));
+                    // dispatch(fetchusers(""));
                     dispatch(saveUser(users));
                 }
                 else

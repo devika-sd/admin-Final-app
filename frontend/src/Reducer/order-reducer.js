@@ -2,7 +2,16 @@ import * as actions from '../Actions/order-action';
 let initialState = {
     orders: [
     ],
-    totalorders:""
+    orderStatusCount: [
+        { New: 0 },
+        { Packed: 0 },
+        { Shipped: 0 },
+        { Completed: 0 },
+        { Cancelled: 0 },
+        { Delayed: 0 }
+    ],
+    totalorders:"",
+    message:''
 }
 
 const reducer = (state = initialState, action) =>{
@@ -24,6 +33,12 @@ const reducer = (state = initialState, action) =>{
                 // users: action.payload
                 ...state,
                 message: action.payload.message
+            }
+         case actions.FETCH_STATUS_COUNT:
+            return {
+                ...state,
+                orderStatusCount: action.payload,
+
             }
         case actions.RESET_ORDERS: return initialState
         default : return state

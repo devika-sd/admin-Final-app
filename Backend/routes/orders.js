@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {addOrder, updateOrderById, fetchAllOrders,getOrderCount } = require('../controllers/orders');
+const {addOrder, updateOrderById, fetchAllOrders,getOrderCount,ordersCount } = require('../controllers/orders');
 const { protect, authorize } = require('../middleware/auth');
 var advancedFind = require('../middleware/Advancedfind');
 const Orders = require('../models/orders');
@@ -16,5 +16,8 @@ router.route('/:_id')
 
 router.route('/count')
     .get(protect,authorize('admin'), getOrderCount)
+
+router.route('/piecount')
+    .get(ordersCount)
 
 module.exports = router;

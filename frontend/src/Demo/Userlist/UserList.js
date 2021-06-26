@@ -15,6 +15,8 @@ import { connect } from 'react-redux';
 import * as useractions from '../../Actions/user-action';
 import NavLeft from '../../App/layout/AdminLayout/NavBar/NavLeft/index';
 import NavSearch from '../../App/layout/AdminLayout/NavBar/NavLeft/NavSearch';
+import Notification from '../Notification/Notification';
+
 class UserList extends React.Component {
     constructor(props) {
         super(props)
@@ -124,6 +126,9 @@ class UserList extends React.Component {
         })
         return (
             <Aux>
+                {this.props.message.includes('Unblocked') ? <Notification open={true} variant="info" msg={this.props.message}/> : null}
+                {this.props.message.includes('user is blocked') ? <Notification open={true} variant="warning" msg={this.props.message}/> : null}
+                {this.props.message.includes('deleted') ? <Notification open={true} variant='error' msg={this.props.message}/> : null}
                 <Row>
                     <Col md={12} xl={12}>
                         <Card className='Recent-Users'>
@@ -165,7 +170,8 @@ const mapStateToProps = (state) => {
         headerFixedLayout: state.reducer.headerFixedLayout,
         collapseMenu: state.reducer.collapseMenu,
         users: state.userReducer.users,
-        total: state.userReducer.totaluser
+        total: state.userReducer.totaluser,
+        message: state.userReducer.message
     }
 }
 
