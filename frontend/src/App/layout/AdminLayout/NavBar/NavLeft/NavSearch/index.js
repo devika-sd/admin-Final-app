@@ -11,7 +11,8 @@ class NavSearch extends Component {
     state = {
         searchWidth: (this.props.windowWidth < 992) ? 100 : 0,
         searchString: (this.props.windowWidth < 992) ? '100px' : '',
-        isOpen: (this.props.windowWidth < 992)
+        isOpen: (this.props.windowWidth < 992),
+        role:this.props.role
     };
 
     searchOnHandler = () => {
@@ -69,7 +70,7 @@ class NavSearch extends Component {
         if (this.state.isOpen) {
             searchClass = [...searchClass, 'open'];
         }
-
+        console.log("******from searchbar*******"+this.state.role)
         return (
             <Aux>
                 <div id="main-search" className={searchClass.join(' ')}>

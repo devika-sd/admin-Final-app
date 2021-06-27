@@ -171,7 +171,7 @@ function ProfilePage(props) {
     return (
         <Aux>
             {props.message.includes('updated')&&notify ? <Notification open={true} variant='success' msg={props.message}/> : null}
-            {props.message.includes('Please')&&notify ? <Notification open={true} variant='error' msg={props.message}/> : null}
+            {/* {props.message.includes('Please')&&notify ? <Notification open={true} variant='error' msg={props.message}/> : null} */}
             <Row>
                 <Col md={4} xl={4}>
                     <Card className='card-event'>

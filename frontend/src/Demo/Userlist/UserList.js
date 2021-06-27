@@ -129,7 +129,7 @@ class UserList extends React.Component {
 
                 </td>
                 <td>
-                    <h6 className="text-muted"><i className="fa fa-circle text-c-green f-10 m-r-15" />21 July 12:56</h6>
+                    <h6 className="text-muted">{user.phone}</h6>
                 </td>
                 <td>
                     <Link to={"/profile/" + user._id}><span style={{ width: '70px', display: 'inline-block', textAlign: 'center' }} className="label theme-bg2 text-white f-12">Update</span></Link>

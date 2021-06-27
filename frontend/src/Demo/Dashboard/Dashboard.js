@@ -32,30 +32,30 @@ class Dashboard extends React.Component {
             })
     }
     render() {
-       const tabContent = (
-            <Aux>
-                    <div className="media friendlist-box align-items-center justify-content-center m-b-20">
+    //    const tabContent = (
+    //         <Aux>
+    //                 <div className="media friendlist-box align-items-center justify-content-center m-b-20">
                     
-                        <div className="media-body">
-                            <i className="icon feather icon-hash text-c-purple"/>
-                            <h6 className="m-0 d-inline text-c-purple">&nbsp;&nbsp;&nbsp;<b>Profile Photo</b></h6>
-                        </div>
-                        <div className="media-body">
-                        <i className="icon feather icon-mail  text-c-purple"/>
-                            <h6 className="m-0 d-inline text-c-purple">&nbsp;&nbsp;&nbsp;<b>Admin Name</b></h6>
-                        </div>
+    //                     <div className="media-body">
+    //                         <i className="icon feather icon-hash text-c-purple"/>
+    //                         <h6 className="m-0 d-inline text-c-purple">&nbsp;&nbsp;&nbsp;<b>Profile Photo</b></h6>
+    //                     </div>
+    //                     <div className="media-body">
+    //                     <i className="icon feather icon-mail  text-c-purple"/>
+    //                         <h6 className="m-0 d-inline text-c-purple">&nbsp;&nbsp;&nbsp;<b>Admin Name</b></h6>
+    //                     </div>
                         
-                        <div className="media-body">
-                        <i className="icon feather icon-calendar text-c-purple"/>
-                            <h6 className="m-0 d-inline text-c-purple">&nbsp;&nbsp;&nbsp;<b>Date Time</b></h6>
-                        </div>
-                        <div className="media-body">
-                        <i className="icon feather icon-pie-chart text-c-purple"/>
-                            <h6 className="m-0 d-inline text-c-purple">&nbsp;&nbsp;&nbsp;<b>Status</b></h6>
-                        </div>
-                 </div>
-           </Aux>
-       );
+    //                     <div className="media-body">
+    //                     <i className="icon feather icon-calendar text-c-purple"/>
+    //                         <h6 className="m-0 d-inline text-c-purple">&nbsp;&nbsp;&nbsp;<b>Date Time</b></h6>
+    //                     </div>
+    //                     <div className="media-body">
+    //                     <i className="icon feather icon-pie-chart text-c-purple"/>
+    //                         <h6 className="m-0 d-inline text-c-purple">&nbsp;&nbsp;&nbsp;<b>Status</b></h6>
+    //                     </div>
+    //              </div>
+    //        </Aux>
+    //    );
 
         return (
             <Aux>
@@ -141,7 +141,7 @@ class Dashboard extends React.Component {
                             </Card.Body>
                         </Card>
                     </Col>
-                    <Col sm={12}>
+                    {/* <Col sm={12}>
                         <Card>
                             <Card.Header>
                                 <Card.Title as='h5'>Admin Table</Card.Title>
@@ -150,7 +150,7 @@ class Dashboard extends React.Component {
                                 <Admintable/>
                             </Card.Body>
                         </Card>
-                    </Col>
+                    </Col> */}
                 </Row>
             </Aux>
         );
