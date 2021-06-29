@@ -16,13 +16,26 @@ const protect = asyncHandler(async (req, res, next) => {
       res.sendStatus(403);
    }
 })
-const authorize = () => {
+const authorize = (...role) => {
    return (req, res, next) => {
       console.log("Admin:" + Object.keys(req.user));
-      if (req.user.isAdmin) {
+      console.log('role is'+role)
+      // if (req.user.isAdmin) {
+      //    next();
+      // }
+      // else {
+      //    res.sendStatus(403);
+      // }
+      if(role.includes('admin')&&req.user.isAdmin)
+      {
          next();
       }
-      else {
+      else if(role.includes('user')&&!req.user.isAdmin)
+      {
+         next();
+      }
+      else
+      {
          res.sendStatus(403);
       }
    }

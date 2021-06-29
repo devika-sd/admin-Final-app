@@ -7,6 +7,7 @@ import App from './App/index';
 import * as serviceWorker from './serviceWorker';
 import reducer from './store/reducer';
 import config from './config';
+import 'font-awesome/css/font-awesome.min.css';
 
 import {applyMiddleware, combineReducers, createStore} from 'redux';
 import userReducer from './Reducer/user-reducer';

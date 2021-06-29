@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom"
 import { connect } from 'react-redux';
 import * as orderactions from '../../Actions/order-action';
 import Notification from '../Notification/Notification';
+import { useHistory } from "react-router";
 
 
 function getModalStyle() {
@@ -27,22 +28,24 @@ const useStyles = makeStyles((theme) => ({
 
 
 function Ordermodel(props) {
-    console.log(props.order);
+    console.log(props.location.order);
+    var [order,setOrder] = useState(props.location.order.user);
+    const history = useHistory();
     const classes = useStyles();
     var [modalStyle] = useState(getModalStyle);
-    var [open, setOpen] = useState(false);
+    var [open, setOpen] = useState(true);
     let { orderid } = useParams();
-    const [email, setemail] = useState(props.order.email);
-    var paytype = props.order.paymentStatus ? "Online" : "COD"
+    const [email, setemail] = useState(order.email);
+    var paytype = order.paymentStatus ? "Online" : "COD"
     const [paymentType, setPayment] = useState(paytype);
-    let newdate = new Date(props.order.orderDate);
+    let newdate = new Date(order.orderDate);
     const [dateTime, setDateTime] = useState(newdate.toLocaleString());
-    var addresses = props.order.address.houseNumber + "," + props.order.address.locality + "," + props.order.address.city + "," + props.order.address.state + ',' + props.order.address.country + ',' + props.order.address.pinCode;
+    var addresses = order.address.houseNumber + "," + order.address.locality + "," + order.address.city + "," + order.address.state + ',' + order.address.country + ',' + order.address.pinCode;
     const [address, setAddress] = useState(addresses);
-    const [phonenumber, setContact] = useState(props.order.phonenumber);
-    const [amount, setAmount] = useState(props.order.amount);
+    const [phonenumber, setContact] = useState(order.phonenumber);
+    const [amount, setAmount] = useState(order.amount);
     const [bookname, setBookname] = useState('');
-    const [status, setStatus] = useState(props.order.status);
+    const [status, setStatus] = useState(order.status);
     const [notify,setNotify] = useState(false);
 
     const [enable, setEnable] = useState(true)
@@ -54,6 +57,8 @@ function Ordermodel(props) {
     const handleClose = () => {
         setOpen(false);
         setNotify(false);
+        history.push('/orderlist');
+
     }
 
     const checkClose = () => {
@@ -65,7 +70,7 @@ function Ordermodel(props) {
         let roleData = { status: status }
         console.log(roleData)
         setEnable(true)
-        await props.updateorderbyid(props.order._id, roleData)
+        await props.updateorderbyid(order._id, roleData)
         await props.onGetorders("");
     }
     const Edit = (event) => {
@@ -83,7 +88,7 @@ function Ordermodel(props) {
         setStatus(e.target.value);
     }
 
-    var booklist = props.order.books.map((book, i) => {
+    var booklist = order.books.map((book, i) => {
         return (
             <tr key={i}>
                 <td> {book.quantity} </td>
@@ -97,7 +102,6 @@ function Ordermodel(props) {
         <div>
             {props.message.includes('updated')&&notify ? <Notification open={true} variant='success' msg={props.message}/> : null}
 
-            <button className="btn" onClick={handleopen}><span className="float-right d-flex  align-items-center">{props.name.slice(props.name.length - 6, props.name.length)}&nbsp;<i className="fa fa-info-circle f-22 m-r-10 text-c-green" /></span></button>
             <Modal
                 open={open}
                 aria-labelledby="simple-modal-title"

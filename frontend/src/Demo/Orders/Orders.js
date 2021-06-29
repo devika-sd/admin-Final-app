@@ -4,7 +4,7 @@ import { Col, Row, Tabs, Tab, Card, Table } from 'react-bootstrap';
 import DEMO from "../../store/constant";
 import avatar2 from '../../assets/images/user/avatar-2.jpg';
 
-import Ordermodel from './OrderModel';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Pagination from 'react-bootstrap/Pagination'
 import * as orderactions from '../../Actions/order-action';
@@ -128,7 +128,13 @@ function Orders(props) {
                     <div className="media-body">
                         <Col><h6 className="m-0 d-inline">{data.email}</h6></Col>
                         <Col><span className="m-0 d-inline">{data.status}</span>
-                            <span className="float-right d-flex  align-items-center"><Ordermodel name={data._id} order={data}/></span></Col>
+                        <Link to={{
+                                    pathname: `/orderModel`,
+                                    order: { user: data },
+                                }}>
+                            <span className="float-right d-flex  align-items-center">{data._id.slice(data._id.length - 6, data._id.length)}&nbsp;<i className="fa fa-info-circle f-22 m-r-10 text-c-green" /></span>
+                        </Link>
+                        </Col>
                     </div>
                 </div>
             </Aux>
