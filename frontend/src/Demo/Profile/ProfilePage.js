@@ -52,7 +52,7 @@ function ProfilePage(props) {
     }, [props.users[0].email,id])
     const onNameChange = (event) => {
         var nameValue = (event.target.value)
-        const expression = new RegExp('^[a-zA-Z]{1}[a-zA-Z0-9\\s]{3,30}$');
+        const expression = new RegExp('[a-zA-Z]{4,}');
         // console.log(nameValue);
         if (!(expression.test(nameValue))) {
             setName(nameValue)
@@ -65,7 +65,7 @@ function ProfilePage(props) {
     }
     const onEmailChange = (event) => {
         var emailValue = (event.target.value);
-        const expression = new RegExp('^\\w+([\\.-]?\\w+)@\\w+([\\.-]?\\w+)(\\.\\w{2,3})+$');
+        const expression = new RegExp('^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$');
         // console.log(nameValue);
         if (!(expression.test(emailValue))) {
             setEmail(emailValue)
