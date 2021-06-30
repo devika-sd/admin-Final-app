@@ -11,7 +11,7 @@ const OrdersSchema = new schema({
         unique: [true, 'Provide a Unique Email'],
         trim: true,
         required: [true, 'Please provide a Email'],
-        match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please provide a valid Email Address']
+        match: [/^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/, 'Please provide a valid Email Address']
     },
     amount: {
         type: Number
